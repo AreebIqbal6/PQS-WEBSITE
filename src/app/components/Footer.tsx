@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
           
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <Image src="/logo_transparent.png" alt="PQS Logo" width={220} height={40} className="mb-8" />
+            <Image src="/logo_transparent_v2.png" alt="PQS Logo" width={220} height={40} className="mb-8" />
             <p className="text-gray-400 font-lato leading-relaxed mb-8 text-lg">
               Precision Quality Services (PQS) is a specialized textile consultancy and training company focused on helping textile organizations improve quality and operational performance.
             </p>

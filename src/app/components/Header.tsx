@@ -24,7 +24,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center group relative z-50">
             <Image 
-              src="/logo_transparent.png" 
+              src="/logo_transparent_v2.png" 
               alt="PQS Logo" 
               width={220} 
               height={40} 
