@@ -67,30 +67,30 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu - Awwwards Style Fullscreen Liquid Overlay */}
+      {/* Mobile Menu - Dropdown */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden fixed top-0 left-0 w-full h-[100dvh] liquid-glass flex flex-col justify-center items-center gap-8 font-montserrat text-pqs-navy z-40"
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="lg:hidden absolute top-full left-0 w-full liquid-glass-dark border-t border-white/10 flex flex-col items-center py-8 gap-6 font-montserrat text-white z-40 shadow-2xl"
           >
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} >
-              <Link href="/" className="text-3xl font-black tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} >
+              <Link href="/" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} >
-              <Link href="/services" className="text-3xl font-black tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>SERVICES</Link>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} >
+              <Link href="/services" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>SERVICES</Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} >
-              <Link href="/about" className="text-3xl font-black tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>ABOUT US</Link>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} >
+              <Link href="/about" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>ABOUT US</Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} >
-              <Link href="/contact" className="text-3xl font-black tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} >
+              <Link href="/contact" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8">
-              <Link href="/contact" className="bg-pqs-gold text-white px-8 py-4 rounded-full font-bold text-sm tracking-widest" onClick={() => setMobileMenuOpen(false)}>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mt-4">
+              <Link href="/contact" className="bg-pqs-gold text-pqs-navy px-8 py-3 rounded-full font-bold text-sm tracking-widest hover:bg-white transition-colors" onClick={() => setMobileMenuOpen(false)}>
                 GET A QUOTE
               </Link>
             </motion.div>
