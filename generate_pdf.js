@@ -8,7 +8,7 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
   
   const htmlPath = 'file:///C:/Users/Noman%20Traders/Desktop/PQS/PQS_Company_Profile.html';
-  const pdfPath = 'C:\\Users\\Noman Traders\\Desktop\\PQS\\PQS_Company_Profile_Fixed.pdf'; // Use new name
+  const pdfPath = 'C:\\Users\\Noman Traders\\Desktop\\PQS\\PQS_Company_Profile.pdf'; // original name
   
   await page.goto(htmlPath, { waitUntil: 'networkidle0' });
   
