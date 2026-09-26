@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, TrendingUp, Search, BookOpen, Layers, CheckCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
-const appleEase = [0.16, 1, 0.3, 1];
+const appleEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },

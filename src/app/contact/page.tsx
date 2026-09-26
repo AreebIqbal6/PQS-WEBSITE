@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
 
-const appleEase = [0.16, 1, 0.3, 1];
+const appleEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 1, ease: appleEase } } };
 const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 
