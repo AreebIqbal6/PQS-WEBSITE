@@ -26,9 +26,9 @@ export default function Header() {
             <Image 
               src="/logo_transparent.png" 
               alt="PQS Logo" 
-              width={isScrolled ? 180 : 220} 
+              width={220} 
               height={40} 
-              className="object-contain transition-all duration-500 ease-out group-hover:scale-105" 
+              className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${isScrolled ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[220px]'} h-auto`} 
             />
           </Link>
 
@@ -75,7 +75,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden absolute top-0 left-0 w-full h-screen liquid-glass flex flex-col justify-center items-center gap-8 font-montserrat text-pqs-navy z-40"
+            className="lg:hidden fixed top-0 left-0 w-full h-[100dvh] liquid-glass flex flex-col justify-center items-center gap-8 font-montserrat text-pqs-navy z-40"
           >
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} >
               <Link href="/" className="text-3xl font-black tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>
