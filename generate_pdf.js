@@ -3,12 +3,13 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch({
     executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    headless: "new"
+    headless: true, // Use old headless to avoid OS DPI scaling
+    args: ['--force-device-scale-factor=1']
   });
   const page = await browser.newPage();
   
-  const htmlPath = 'file:///C:/Users/Noman%20Traders/Desktop/PQS/PQS_Company_Profile.html';
-  const pdfPath = 'C:\\Users\\Noman Traders\\Desktop\\PQS\\PQS_Company_Profile.pdf'; // original name
+  const htmlPath = 'file:///C:/Users/Noman%20Traders/OneDrive/Desktop/PQS/PQS_Company_Profile.html';
+  const pdfPath = 'C:\\Users\\Noman Traders\\OneDrive\\Desktop\\PQS\\PQS_Company_Profile.pdf';
   
   await page.goto(htmlPath, { waitUntil: 'networkidle0' });
   
