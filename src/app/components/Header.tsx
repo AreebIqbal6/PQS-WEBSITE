@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-2 bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 shadow-xl`}>
+        <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-2 bg-white/5 backdrop-blur-3xl saturate-200 border border-white/10 shadow-xl`}>
           {/* Logo */}
           <Link href="/" className="flex items-center group relative z-50">
             <Image 
@@ -38,7 +38,7 @@ export default function Header() {
             <div className="group relative cursor-pointer flex items-center gap-1 hover:text-pqs-gold transition-colors duration-300 py-4">
               SERVICES <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
               {/* Dropdown glass menu */}
-              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-[#0A1E35]/60 backdrop-blur-3xl saturate-200 border border-white/20 rounded-xl p-4 flex flex-col gap-3 shadow-2xl">
+              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-white/10 backdrop-blur-3xl saturate-200 border border-white/20 rounded-xl p-4 flex flex-col gap-3 shadow-2xl">
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">All Services</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Textile Training</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Consultancy</Link>
@@ -75,7 +75,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="lg:hidden absolute top-full left-0 w-full bg-[#0A1E35]/80 backdrop-blur-3xl saturate-200 border-t border-white/20 flex flex-col items-center py-8 gap-6 font-montserrat text-white z-40 shadow-2xl"
+            className="lg:hidden absolute top-full left-0 w-full bg-black/60 backdrop-blur-3xl saturate-200 border-t border-white/10 flex flex-col items-center py-8 gap-6 font-montserrat text-white z-40 shadow-2xl"
           >
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} >
               <Link href="/" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>

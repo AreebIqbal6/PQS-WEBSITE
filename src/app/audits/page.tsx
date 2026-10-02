@@ -66,7 +66,7 @@ export default function Audits() {
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={staggerContainer} className="lg:w-1/2 flex items-center justify-center">
-              <motion.div variants={fadeInUp} className="w-full max-w-md bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 p-12 rounded-[3rem] shadow-2xl relative overflow-hidden bg-pqs-navy/5">
+              <motion.div variants={fadeInUp} className="w-full max-w-md bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-12 rounded-[3rem] shadow-2xl relative overflow-hidden bg-pqs-navy/5">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-pqs-gold/20 rounded-full blur-3xl"></div>
                 <div className="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center mb-8 relative z-10">
                   <ClipboardList size={40} className="text-pqs-gold" />

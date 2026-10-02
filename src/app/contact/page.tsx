@@ -38,7 +38,7 @@ export default function Contact() {
             
             {/* INFO PANEL */}
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="lg:w-1/3 flex flex-col gap-6">
-              <motion.div variants={fadeInUp} className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
+              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
                 <div className="w-12 h-12 rounded-full bg-pqs-gold/20 flex items-center justify-center mb-6">
                   <Phone className="text-pqs-gold" size={20} />
                 </div>
@@ -46,7 +46,7 @@ export default function Contact() {
                 <p className="text-gray-400 font-lato">+1 234 567 890</p>
               </motion.div>
 
-              <motion.div variants={fadeInUp} className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
+              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
                 <div className="w-12 h-12 rounded-full bg-pqs-gold/20 flex items-center justify-center mb-6">
                   <Mail className="text-pqs-gold" size={20} />
                 </div>
@@ -54,7 +54,7 @@ export default function Contact() {
                 <p className="text-gray-400 font-lato">info@pqs-textiles.com</p>
               </motion.div>
 
-              <motion.div variants={fadeInUp} className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
+              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-8 rounded-3xl">
                 <div className="w-12 h-12 rounded-full bg-pqs-gold/20 flex items-center justify-center mb-6">
                   <MapPin className="text-pqs-gold" size={20} />
                 </div>
@@ -65,7 +65,7 @@ export default function Contact() {
 
             {/* FORM PANEL */}
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="lg:w-2/3">
-              <motion.div variants={fadeInUp} className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/20 p-10 md:p-14 rounded-3xl">
+              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-10 md:p-14 rounded-3xl">
                 <form className="flex flex-col gap-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col gap-2">
