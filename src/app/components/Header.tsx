@@ -22,7 +22,7 @@ export default function Header() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-2 bg-white/5 backdrop-blur-3xl saturate-200 border border-white/10 shadow-xl`}>
           {/* Logo */}
-          <Link href="/" className="flex items-center group relative z-50">
+          <Link href="/" className="flex items-center group relative z-50 mix-blend-difference">
             <Image 
               src="/logo_transparent_v2.png" 
               alt="PQS Logo" 
@@ -33,33 +33,33 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
-            <Link href="/" className="hover:text-pqs-gold transition-colors duration-300">HOME</Link>
-            <div className="group relative cursor-pointer flex items-center gap-1 hover:text-pqs-gold transition-colors duration-300 py-4">
+          <nav className="hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider text-white mix-blend-difference">
+            <Link href="/" className="hover:text-gray-300 transition-colors duration-300">HOME</Link>
+            <div className="group relative cursor-pointer flex items-center gap-1 hover:text-gray-300 transition-colors duration-300 py-4">
               SERVICES <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
               {/* Dropdown glass menu */}
-              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-white/10 backdrop-blur-3xl saturate-200 border border-white/20 rounded-xl p-4 flex flex-col gap-3 shadow-2xl">
+              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-black/80 backdrop-blur-3xl saturate-200 border border-white/20 rounded-xl p-4 flex flex-col gap-3 shadow-2xl mix-blend-normal">
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">All Services</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Textile Training</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Consultancy</Link>
                 <Link href="/audits" className="text-white hover:text-pqs-gold transition-colors">Audits</Link>
               </div>
             </div>
-            <Link href="/about" className="hover:text-pqs-gold transition-colors duration-300">ABOUT US</Link>
-            <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-300">CONTACT</Link>
+            <Link href="/about" className="hover:text-gray-300 transition-colors duration-300">ABOUT US</Link>
+            <Link href="/contact" className="hover:text-gray-300 transition-colors duration-300">CONTACT</Link>
           </nav>
 
           {/* Right Actions */}
-          <div className="hidden lg:flex items-center gap-6">
-            <button className="text-white hover:text-pqs-gold transition-colors duration-300 hover:scale-110"><Search size={20} /></button>
-            <Link href="/contact" className="bg-pqs-gold text-pqs-navy px-7 py-2.5 rounded-full font-bold font-montserrat tracking-wide text-xs hover:bg-white shadow-lg hover:shadow-[0_10px_20px_rgba(200,169,81,0.3)] transition-all duration-300 hover:-translate-y-0.5">
+          <div className="hidden lg:flex items-center gap-6 mix-blend-difference">
+            <button className="text-white hover:text-gray-300 transition-colors duration-300 hover:scale-110"><Search size={20} /></button>
+            <Link href="/contact" className="bg-white text-black px-7 py-2.5 rounded-full font-bold font-montserrat tracking-wide text-xs hover:bg-gray-200 shadow-lg transition-all duration-300 hover:-translate-y-0.5">
               GET A QUOTE
             </Link>
           </div>
 
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden text-white hover:scale-110 transition-transform relative z-50 p-2" 
+            className="lg:hidden text-white mix-blend-difference hover:scale-110 transition-transform relative z-50 p-2" 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
