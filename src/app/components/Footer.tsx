@@ -50,8 +50,8 @@ export default function Footer() {
         <div className="border-t border-gray-800/80 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm font-lato font-semibold">
           <p>&copy; {new Date().getFullYear()} Precision Quality Services. All Rights Reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-pqs-gold transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-pqs-gold transition-colors">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-pqs-gold transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-pqs-gold transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
