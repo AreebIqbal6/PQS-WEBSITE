@@ -28,35 +28,42 @@ export default function HeroSection() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-20">
-        <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex flex-col items-center text-center max-w-5xl mx-auto">
+        <motion.div initial="hidden" animate="visible" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } } }} className="flex flex-col items-center text-center max-w-5xl mx-auto">
           
-          <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-8">
+          <motion.div variants={{ hidden: { opacity: 0, scale: 0.5, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } }} className="flex items-center gap-4 mb-8">
             <div className="h-[2px] w-12 bg-pqs-gold"></div>
             <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs md:text-sm">Precision Quality Services</h2>
             <div className="h-[2px] w-12 bg-pqs-gold"></div>
           </motion.div>
 
           <motion.h1 
-            variants={fadeInUp} 
-            className="text-5xl md:text-7xl lg:text-8xl font-montserrat font-black text-white leading-[1.05] tracking-tight mb-8"
+            variants={{ hidden: { opacity: 0, y: 50, rotateX: 20 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } } }} 
+            className="text-5xl md:text-7xl lg:text-8xl font-montserrat font-black text-white leading-[1.05] tracking-tight mb-8 perspective-1000"
           >
             Elevating Textile <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pqs-gold to-white italic font-light">Performance</span>
+            <motion.span 
+              initial={{ opacity: 0, filter: "blur(10px)" }} 
+              animate={{ opacity: 1, filter: "blur(0px)" }} 
+              transition={{ delay: 0.8, duration: 1.5 }}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-pqs-gold to-white italic font-light inline-block"
+            >
+              Performance
+            </motion.span>
           </motion.h1>
 
-          <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg md:text-2xl max-w-3xl mb-12 font-light leading-relaxed">
+          <motion.p variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } }} className="text-gray-300 font-lato text-lg md:text-2xl max-w-3xl mb-12 font-light leading-relaxed">
             Specialized consultancy, training, and troubleshooting rooted in the real challenges of the factory floor. We build sustainable zero-defect cultures.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6">
-            <Link href="/services" className="group relative inline-flex items-center gap-4 bg-pqs-gold text-pqs-navy rounded-full px-8 py-4 overflow-hidden transition-all duration-500 hover:bg-white shadow-xl hover:-translate-y-1">
+          <motion.div variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } }} className="flex flex-col sm:flex-row gap-6">
+            <Link href="/services" className="group relative inline-flex items-center gap-4 bg-pqs-gold text-pqs-navy rounded-full px-8 py-4 overflow-hidden transition-all duration-500 hover:bg-white shadow-[0_0_40px_rgba(200,169,81,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] hover:-translate-y-1">
               <span className="relative z-10 font-montserrat font-bold text-sm tracking-widest">OUR EXPERTISE</span>
-              <div className="relative z-10 w-8 h-8 rounded-full bg-pqs-navy/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                <ArrowRight size={16} className="text-pqs-navy group-hover:translate-x-1 transition-transform" />
+              <div className="relative z-10 w-8 h-8 rounded-full bg-pqs-navy/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                <ArrowRight size={16} className="text-pqs-navy" />
               </div>
             </Link>
             
-            <Link href="/contact" className="group relative inline-flex items-center gap-4 bg-transparent border border-white/30 text-white rounded-full px-8 py-4 overflow-hidden transition-all duration-500 hover:border-pqs-gold hover:bg-pqs-gold/10">
+            <Link href="/contact" className="group relative inline-flex items-center gap-4 bg-transparent border border-white/30 text-white rounded-full px-8 py-4 overflow-hidden transition-all duration-500 hover:border-pqs-gold hover:bg-pqs-gold/10 hover:shadow-[0_0_30px_rgba(200,169,81,0.2)]">
               <span className="relative z-10 font-montserrat font-bold text-sm tracking-widest">GET IN TOUCH</span>
             </Link>
           </motion.div>
@@ -64,14 +71,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
-      >
-        <span className="text-gray-400 font-montserrat text-[10px] tracking-widest uppercase">Scroll</span>
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="w-[1px] h-12 bg-gradient-to-b from-pqs-gold to-transparent" />
-      </motion.div>
+      {/* Scroll indicator removed to prevent overlap on smaller viewports */}
     </section>
   );
 }
