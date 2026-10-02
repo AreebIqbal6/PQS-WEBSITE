@@ -61,7 +61,7 @@ export default function SplitInfoSection() {
                   variants={fadeInUp} 
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-8 left-8 right-8 liquid-glass rounded-2xl p-6 flex justify-between items-center"
+                  className="absolute bottom-8 left-8 right-8 bg-white/20 backdrop-blur-3xl saturate-200 border border-white/40 shadow-xl rounded-2xl p-6 flex justify-between items-center"
                >
                   <div>
                     <div className="text-pqs-navy font-black text-4xl font-montserrat">100%</div>

@@ -25,7 +25,7 @@ export default function ServicesCards() {
               variants={fadeInUp} 
               whileHover={{ y: -10, scale: 1.02 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="liquid-glass-dark rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
+              className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/10 rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-pqs-gold/10 rounded-full blur-3xl group-hover:bg-pqs-gold/30 transition-colors duration-700 pointer-events-none mix-blend-screen"></div>
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
@@ -47,7 +47,7 @@ export default function ServicesCards() {
               variants={fadeInUp} 
               whileHover={{ y: -10, scale: 1.02 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="liquid-glass-dark rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full md:translate-y-12 cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
+              className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/10 rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full md:translate-y-12 cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-pqs-gold/10 rounded-full blur-3xl group-hover:bg-pqs-gold/30 transition-colors duration-700 pointer-events-none mix-blend-screen"></div>
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
@@ -69,7 +69,7 @@ export default function ServicesCards() {
               variants={fadeInUp} 
               whileHover={{ y: -10, scale: 1.02 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="liquid-glass-dark rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
+              className="bg-[#0A1E35]/40 backdrop-blur-3xl saturate-200 border border-white/10 rounded-[2rem] p-8 md:p-10 group transition-all duration-500 ease-out relative overflow-hidden h-full cursor-pointer hover:shadow-2xl hover:shadow-pqs-gold/10"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-pqs-gold/10 rounded-full blur-3xl group-hover:bg-pqs-gold/30 transition-colors duration-700 pointer-events-none mix-blend-screen"></div>
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
