@@ -42,7 +42,7 @@ export default function Header() {
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">All Services</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Textile Training</Link>
                 <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Consultancy</Link>
-                <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Audits</Link>
+                <Link href="/audits" className="text-white hover:text-pqs-gold transition-colors">Audits</Link>
               </div>
             </div>
             <Link href="/about" className="hover:text-pqs-gold transition-colors duration-300">ABOUT US</Link>
