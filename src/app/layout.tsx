@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import { Montserrat, Lato } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SmoothScrolling from "./components/SmoothScrolling";
 
-const montserrat = Montserrat({
+const headingFont = Plus_Jakarta_Sans({
   variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
-const lato = Lato({
+const bodyFont = Inter({
   variable: "--font-lato",
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${montserrat.variable} ${lato.variable} antialiased font-sans flex flex-col min-h-screen`}
+        className={`${headingFont.variable} ${bodyFont.variable} antialiased font-sans flex flex-col min-h-screen`}
       >
         <SmoothScrolling>
           <Header />
