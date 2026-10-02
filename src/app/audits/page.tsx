@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle, ClipboardList } from 'lucide-react';
 import Link from 'next/link';
 
-const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } };
+const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as any } } };
 const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 
 export default function Audits() {
