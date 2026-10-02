@@ -27,19 +27,34 @@ body {
 }
 
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05); /* Highly transparent for background shine */
+  backdrop-filter: blur(45px) saturate(180%) brightness(1.1) url(#chromatic-glass);
+  -webkit-backdrop-filter: blur(45px) saturate(180%) brightness(1.1) url(#chromatic-glass);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  /* iOS Control Center exact shadow profile for 3D edges */
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.1),
+    0 12px 36px rgba(0, 0, 0, 0.15);
+  will-change: transform, backdrop-filter;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .liquid-glass-dark {
   background: rgba(10, 30, 53, 0.2);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  backdrop-filter: blur(45px) saturate(180%) brightness(0.9) url(#chromatic-glass);
+  -webkit-backdrop-filter: blur(45px) saturate(180%) brightness(0.9) url(#chromatic-glass);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2rem;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.3),
+    0 12px 40px rgba(0, 0, 0, 0.3);
+  will-change: transform, backdrop-filter;
+  transform: translateZ(0);
 }
 
 .noise-bg {
