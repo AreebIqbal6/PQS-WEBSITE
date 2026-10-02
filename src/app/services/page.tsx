@@ -12,22 +12,22 @@ const services = [
   {
     title: "Textile Training",
     desc: "Practical, industry-focused programs for production teams and quality personnel. Root cause analysis taught right on the floor.",
-    img: "/threads.jpg"
+    img: "/unsplash_1.jpg"
   },
   {
     title: "Textile Consultancy",
     desc: "Strengthen processes and build effective quality systems. We implement CAPA and rigorous process mapping for sustainability.",
-    img: "/inspector.jpg"
+    img: "/unsplash_2.jpg"
   },
   {
     title: "Troubleshooting",
     desc: "Structured support to resolve recurring issues at the source. Deep data collection, investigation, and permanent verification.",
-    img: "/loom.jpg"
+    img: "/unsplash_4.jpg"
   },
   {
     title: "Quality Audits",
     desc: "Comprehensive evaluation of factory conditions, quality control systems, and social compliance to meet international standards.",
-    img: "/threads.jpg"
+    img: "/unsplash_3.jpg"
   }
 ];
 
@@ -37,7 +37,7 @@ export default function Services() {
       
       {/* HEADER */}
       <section className="relative h-[50vh] min-h-[400px] flex items-end pb-20 pt-32 overflow-hidden bg-pqs-dark">
-        <div className="absolute inset-0 z-0 bg-[url('/threads.jpg')] bg-cover bg-center opacity-30 mix-blend-luminosity"></div>
+        <div className="absolute inset-0 z-0 bg-[url('/unsplash_0.jpg')] bg-cover bg-center opacity-30 mix-blend-luminosity"></div>
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-pqs-dark via-pqs-dark/80 to-transparent"></div>
         
         <div className="container mx-auto px-4 lg:px-8 relative z-20">

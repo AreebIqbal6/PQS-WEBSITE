@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-pqs-dark">
       {/* Background Image & Overlays */}
-      <div className="absolute inset-0 z-0 bg-[url('/threads.jpg')] bg-cover bg-center opacity-40 mix-blend-luminosity scale-105"></div>
+      <div className="absolute inset-0 z-0 bg-[url('/unsplash_0.jpg')] bg-cover bg-center opacity-40 mix-blend-luminosity scale-105"></div>
       <div className="absolute inset-0 z-10 hero-overlay"></div>
       
       {/* Animated abstract geometric shapes */}
