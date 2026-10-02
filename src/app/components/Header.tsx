@@ -17,6 +17,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  return (
     <header className={`fixed w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-2' : 'py-6'}`}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-2 ${
