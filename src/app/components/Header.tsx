@@ -11,18 +11,19 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      // Trigger the light glass theme only when scrolling past the dark hero section
+      setIsScrolled(window.scrollY > window.innerHeight - 80);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className={`flex justify-between items-center transition-all duration-700 rounded-full px-6 py-3 ${
           isScrolled 
-            ? 'bg-black/60 backdrop-blur-3xl saturate-200 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.2)]' 
+            ? 'bg-white/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-black/5' 
             : 'bg-transparent border border-transparent shadow-none'
         }`}>
           {/* Logo */}
@@ -32,21 +33,22 @@ export default function Header() {
               alt="PQS Logo" 
               width={220} 
               height={40} 
-              className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${isScrolled ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[220px]'} h-auto`} 
+              className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${isScrolled ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[220px]'} h-auto`}
+              style={{ filter: isScrolled ? 'brightness(0)' : 'none' }}
             />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
+          <nav className={`hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider transition-colors duration-500 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`}>
             <Link href="/" className="hover:text-pqs-gold transition-colors duration-300">HOME</Link>
             <div className="group relative cursor-pointer flex items-center gap-1 hover:text-pqs-gold transition-colors duration-300 py-4">
               SERVICES <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
               {/* Dropdown glass menu */}
-              <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-black/80 backdrop-blur-3xl saturate-200 border border-white/10 rounded-xl p-4 flex flex-col gap-3 shadow-2xl">
-                <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">All Services</Link>
-                <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Textile Training</Link>
-                <Link href="/services" className="text-white hover:text-pqs-gold transition-colors">Consultancy</Link>
-                <Link href="/audits" className="text-white hover:text-pqs-gold transition-colors">Audits</Link>
+              <div className={`absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-xl p-4 flex flex-col gap-3 shadow-2xl ${isScrolled ? 'bg-white/95 backdrop-blur-2xl border border-gray-100' : 'bg-black/80 backdrop-blur-3xl border border-white/10'}`}>
+                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>All Services</Link>
+                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Textile Training</Link>
+                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Consultancy</Link>
+                <Link href="/audits" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Audits</Link>
               </div>
             </div>
             <Link href="/about" className="hover:text-pqs-gold transition-colors duration-300">ABOUT US</Link>
@@ -54,16 +56,16 @@ export default function Header() {
           </nav>
 
           {/* Right Actions */}
-          <div className="hidden lg:flex items-center gap-6 text-white">
+          <div className={`hidden lg:flex items-center gap-6 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`}>
             <button className="hover:text-pqs-gold transition-colors duration-300 hover:scale-110"><Search size={20} /></button>
-            <Link href="/contact" className="bg-pqs-gold text-pqs-navy hover:bg-white hover:text-black px-7 py-2.5 rounded-full font-bold font-montserrat tracking-wide text-xs shadow-[0_0_20px_rgba(200,169,81,0.2)] transition-all duration-300 hover:-translate-y-0.5">
+            <Link href="/contact" className={`px-7 py-2.5 rounded-full font-bold font-montserrat tracking-wide text-xs transition-all duration-300 hover:-translate-y-0.5 ${isScrolled ? 'bg-pqs-navy text-white hover:bg-pqs-gold hover:text-pqs-navy shadow-[0_10px_20px_rgba(10,30,53,0.15)]' : 'bg-pqs-gold text-pqs-navy hover:bg-white hover:text-black shadow-[0_0_20px_rgba(200,169,81,0.2)]'}`}>
               GET A QUOTE
             </Link>
           </div>
 
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden text-white hover:scale-110 transition-transform relative z-50 p-2" 
+            className={`lg:hidden hover:scale-110 transition-transform relative z-50 p-2 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`} 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
