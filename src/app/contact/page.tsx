@@ -1,13 +1,16 @@
 "use client";
-import React from 'react';
+import React, { useActionState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, Phone, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { sendEmail } from '../actions/sendEmail';
 
 const appleEase: any = [0.16, 1, 0.3, 1];
 const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 1, ease: appleEase } } };
 const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 
 export default function Contact() {
+  const [state, formAction, isPending] = useActionState(sendEmail, null);
+
   return (
     <div className="flex flex-col min-h-screen bg-pqs-dark noise-bg">
       
@@ -65,38 +68,54 @@ export default function Contact() {
 
             {/* FORM PANEL */}
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="lg:w-2/3">
-              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-10 md:p-14 rounded-3xl">
-                <form className="flex flex-col gap-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">First Name</label>
-                      <input type="text" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Last Name</label>
-                      <input type="text" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Email Address</label>
-                    <input type="email" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Your Message</label>
-                    <textarea rows={4} className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato resize-none"></textarea>
-                  </div>
-
-                  <div className="mt-4">
-                    <button type="button" className="group relative inline-flex items-center justify-center gap-4 bg-pqs-gold text-pqs-navy rounded-full px-10 py-5 overflow-hidden transition-all duration-500 hover:bg-white shadow-xl w-full md:w-auto">
-                      <span className="relative z-10 font-montserrat font-bold text-sm tracking-widest">SEND MESSAGE</span>
-                      <div className="relative z-10 w-8 h-8 rounded-full bg-pqs-navy/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                        <ArrowRight size={16} className="text-pqs-navy group-hover:translate-x-1 transition-transform" />
+              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-3xl saturate-200 border border-white/20 p-10 md:p-14 rounded-3xl relative overflow-hidden">
+                {state?.success ? (
+                  <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center text-center py-12 h-full">
+                    <CheckCircle2 className="text-pqs-gold w-20 h-20 mb-6" />
+                    <h3 className="text-3xl font-montserrat font-bold text-white mb-4">Message Sent!</h3>
+                    <p className="text-gray-400 font-lato text-lg">Thank you for reaching out. We will get back to you shortly.</p>
+                  </motion.div>
+                ) : (
+                  <form action={formAction} className="flex flex-col gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">First Name</label>
+                        <input name="firstName" required type="text" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
                       </div>
-                    </button>
-                  </div>
-                </form>
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Last Name</label>
+                        <input name="lastName" required type="text" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Email Address</label>
+                      <input name="email" required type="email" className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato" />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-montserrat font-bold tracking-widest text-gray-400 uppercase">Your Message</label>
+                      <textarea name="message" required rows={4} className="bg-white/5 border-b-2 border-white/10 focus:border-pqs-gold text-white px-4 py-3 rounded-t-lg outline-none transition-colors font-lato resize-none"></textarea>
+                    </div>
+
+                    {state?.error && (
+                      <p className="text-red-400 text-sm font-lato">{state.error}</p>
+                    )}
+
+                    <div className="mt-4">
+                      <button disabled={isPending} type="submit" className="group relative inline-flex items-center justify-center gap-4 bg-pqs-gold text-pqs-navy rounded-full px-10 py-5 overflow-hidden transition-all duration-500 hover:bg-white shadow-xl w-full md:w-auto disabled:opacity-70 disabled:cursor-not-allowed">
+                        <span className="relative z-10 font-montserrat font-bold text-sm tracking-widest">
+                          {isPending ? 'SENDING...' : 'SEND MESSAGE'}
+                        </span>
+                        {!isPending && (
+                          <div className="relative z-10 w-8 h-8 rounded-full bg-pqs-navy/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                            <ArrowRight size={16} className="text-pqs-navy group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                )}
               </motion.div>
             </motion.div>
 
