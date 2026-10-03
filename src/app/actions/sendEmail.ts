@@ -17,7 +17,7 @@ export async function sendEmail(prevState: any, formData: FormData) {
 
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
-      to: 'info@pqs-textiles.com', // Replace with their actual email, but they haven't provided it, I will use onboarding@resend.dev first or their email if verified. Actually, resend dev keys only allow sending to the verified email (the one they signed up with).
+      to: 'areeb.jpg@gmail.com', // Resend free tier requires sending to the verified registered email
       subject: `New Lead: ${firstName} ${lastName} - PQS Website`,
       text: `
         New Contact Form Submission:
