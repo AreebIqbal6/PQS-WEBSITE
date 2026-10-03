@@ -11,19 +11,18 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Trigger the light glass theme only when scrolling past the dark hero section
-      setIsScrolled(window.scrollY > window.innerHeight - 80);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className={`flex justify-between items-center transition-all duration-700 rounded-full px-6 py-3 ${
+        <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-3 ${
           isScrolled 
-            ? 'bg-white/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-black/5' 
+            ? 'bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.1)]' 
             : 'bg-transparent border border-transparent shadow-none'
         }`}>
           {/* Logo */}
@@ -44,7 +43,7 @@ export default function Header() {
             <div className="group relative cursor-pointer flex items-center gap-1 hover:text-pqs-gold transition-colors duration-300 py-4">
               SERVICES <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
               {/* Dropdown glass menu */}
-              <div className={`absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-xl p-4 flex flex-col gap-3 shadow-2xl ${isScrolled ? 'bg-white/95 backdrop-blur-2xl border border-gray-100' : 'bg-black/80 backdrop-blur-3xl border border-white/10'}`}>
+              <div className={`absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-xl p-4 flex flex-col gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.1)] ${isScrolled ? 'bg-white/70 backdrop-blur-xl border border-white/50' : 'bg-black/40 backdrop-blur-xl border border-white/10'}`}>
                 <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>All Services</Link>
                 <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Textile Training</Link>
                 <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Consultancy</Link>
@@ -81,7 +80,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className={`lg:hidden absolute top-full left-0 w-full bg-black/80 border-t border-white/10 text-white backdrop-blur-3xl saturate-200 flex flex-col items-center py-8 gap-6 font-montserrat z-40 shadow-2xl`}
+            className={`lg:hidden absolute top-full left-0 w-full bg-white/70 border-t border-white/50 text-pqs-navy backdrop-blur-xl flex flex-col items-center py-8 gap-6 font-montserrat z-40 shadow-[0_8px_32px_rgba(0,0,0,0.1)]`}
           >
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} >
               <Link href="/" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>
@@ -96,7 +95,7 @@ export default function Header() {
               <Link href="/contact" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mt-4">
-              <Link href="/contact" className={`px-8 py-3 rounded-full font-bold text-sm tracking-widest transition-colors bg-pqs-gold text-pqs-navy hover:bg-white`} onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/contact" className={`px-8 py-3 rounded-full font-bold text-sm tracking-widest transition-colors bg-pqs-navy text-white hover:bg-pqs-gold hover:text-pqs-navy shadow-[0_10px_20px_rgba(10,30,53,0.15)]`} onClick={() => setMobileMenuOpen(false)}>
                 GET A QUOTE
               </Link>
             </motion.div>
