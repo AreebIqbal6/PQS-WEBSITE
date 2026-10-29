@@ -255,8 +255,8 @@ export default function Services() {
           </div>
 
           {/* STICKY SERVICE TABS BAR */}
-          <div className="sticky top-[68px] md:top-[76px] z-30 py-2.5 mb-14 md:mb-18 -mx-4 px-4 bg-[#fafafa]/90 backdrop-blur-xl border-b border-gray-200/60 shadow-xs flex justify-center">
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300 shadow-inner max-w-3xl">
+          <div className="sticky top-[68px] md:top-[76px] z-30 py-2 mb-12 md:mb-16 -mx-4 px-4 bg-[#fafafa]/90 backdrop-blur-xl border-b border-gray-200/60 shadow-xs flex justify-center">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 p-1.5 sm:p-2 rounded-2xl md:rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300 shadow-inner max-w-4xl">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -264,15 +264,15 @@ export default function Services() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabClick(tab.id)}
-                    className={`relative flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-300 cursor-pointer ${
+                    className={`relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl md:rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-200 cursor-pointer ${
                       isActive
-                        ? 'bg-pqs-navy text-pqs-gold shadow-md shadow-pqs-navy/30 scale-105'
+                        ? 'bg-pqs-navy text-pqs-gold shadow-md shadow-pqs-navy/30'
                         : 'text-gray-700 hover:text-pqs-navy hover:bg-white'
                     }`}
                   >
                     <Icon size={14} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
-                    <span>{tab.label}</span>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'}`}>
+                    <span className="whitespace-nowrap">{tab.label}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono shrink-0 ${isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'}`}>
                       {tab.count}
                     </span>
                   </button>

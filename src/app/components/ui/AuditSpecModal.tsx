@@ -165,10 +165,10 @@ Official Email: precisionqualityserviceslabs@gmail.com
                     Verified Scope
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-montserrat font-black text-pqs-navy truncate">
+                <h3 className="text-lg sm:text-xl font-montserrat font-black text-pqs-navy leading-tight">
                   {data.code}
                 </h3>
-                <p className="text-slate-500 font-lato text-xs truncate">
+                <p className="text-slate-500 font-lato text-xs leading-relaxed mt-0.5">
                   {data.title}
                 </p>
               </div>
@@ -199,32 +199,32 @@ Official Email: precisionqualityserviceslabs@gmail.com
 
             {/* Quick Metrics Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-2.5">
-                <Clock size={16} className="text-pqs-gold shrink-0" />
-                <div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-start gap-2.5">
+                <Clock size={16} className="text-pqs-gold shrink-0 mt-0.5" />
+                <div className="min-w-0">
                   <div className="text-slate-400 text-[10px] uppercase font-montserrat font-semibold">Turnaround</div>
-                  <div className="text-pqs-navy font-montserrat font-bold text-xs">{data.turnaround}</div>
+                  <div className="text-pqs-navy font-montserrat font-bold text-xs leading-snug">{data.turnaround}</div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-2.5">
-                <CalendarCheck size={16} className="text-pqs-gold shrink-0" />
-                <div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-start gap-2.5">
+                <CalendarCheck size={16} className="text-pqs-gold shrink-0 mt-0.5" />
+                <div className="min-w-0">
                   <div className="text-slate-400 text-[10px] uppercase font-montserrat font-semibold">Validity</div>
-                  <div className="text-pqs-navy font-montserrat font-bold text-xs truncate" title={data.validity}>{data.validity}</div>
+                  <div className="text-pqs-navy font-montserrat font-bold text-xs leading-snug" title={data.validity}>{data.validity}</div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-2.5">
-                <ShieldCheck size={16} className="text-pqs-gold shrink-0" />
-                <div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-start gap-2.5">
+                <ShieldCheck size={16} className="text-pqs-gold shrink-0 mt-0.5" />
+                <div className="min-w-0">
                   <div className="text-slate-400 text-[10px] uppercase font-montserrat font-semibold">Audit Regime</div>
-                  <div className="text-pqs-navy font-montserrat font-bold text-xs truncate" title={data.iafSector}>Accredited</div>
+                  <div className="text-pqs-navy font-montserrat font-bold text-xs leading-snug" title={data.iafSector}>{data.iafSector}</div>
                 </div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-2.5">
-                <Award size={16} className="text-pqs-gold shrink-0" />
-                <div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-start gap-2.5">
+                <Award size={16} className="text-pqs-gold shrink-0 mt-0.5" />
+                <div className="min-w-0">
                   <div className="text-slate-400 text-[10px] uppercase font-montserrat font-semibold">Recognition</div>
-                  <div className="text-pqs-navy font-montserrat font-bold text-xs">Global Brands</div>
+                  <div className="text-pqs-navy font-montserrat font-bold text-xs leading-snug">Global Brands</div>
                 </div>
               </div>
             </div>

@@ -125,7 +125,7 @@ export default function AccreditationsSection() {
                   <button
                     type="button"
                     onClick={() => setSpecModalId(cert.id)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-xs tracking-wider border border-white/15 transition-all cursor-pointer active:scale-[0.98] group/btn"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2.5 sm:px-3 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-[11px] sm:text-xs tracking-wide border border-white/15 transition-all cursor-pointer active:scale-[0.98] group/btn whitespace-nowrap"
                   >
                     <FileCheck2 size={14} className="text-pqs-gold group-hover/btn:text-pqs-navy transition-colors" />
                     <span>VIEW SPECIFICATION</span>

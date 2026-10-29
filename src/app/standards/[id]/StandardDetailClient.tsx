@@ -156,24 +156,24 @@ Official Email: precisionqualityserviceslabs@gmail.com
           </div>
 
           {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 max-w-6xl">
-            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-6xl">
+            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between min-h-[96px]">
               <div className="text-[11px] font-montserrat text-pqs-gold font-bold uppercase tracking-wider">Turnaround</div>
-              <div className="text-base font-montserrat font-bold text-white mt-1">{standard.turnaround}</div>
+              <div className="text-sm sm:text-base font-montserrat font-bold text-white mt-1.5 leading-snug break-words">{standard.turnaround}</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between min-h-[96px]">
               <div className="text-[11px] font-montserrat text-pqs-gold font-bold uppercase tracking-wider">Certificate Validity</div>
-              <div className="text-base font-montserrat font-bold text-white mt-1 truncate" title={standard.validity}>{standard.validity}</div>
+              <div className="text-sm sm:text-base font-montserrat font-bold text-white mt-1.5 leading-snug break-words" title={standard.validity}>{standard.validity}</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between min-h-[96px]">
               <div className="text-[11px] font-montserrat text-pqs-gold font-bold uppercase tracking-wider">Scope Regime</div>
-              <div className="text-base font-montserrat font-bold text-white mt-1 truncate" title={standard.iafSector}>
+              <div className="text-sm sm:text-base font-montserrat font-bold text-white mt-1.5 leading-snug break-words" title={standard.iafSector}>
                 {standard.iafSector}
               </div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10">
+            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between min-h-[96px]">
               <div className="text-[11px] font-montserrat text-pqs-gold font-bold uppercase tracking-wider">Buyer Acceptance</div>
-              <div className="text-base font-montserrat font-bold text-white mt-1">Globally Endorsed</div>
+              <div className="text-sm sm:text-base font-montserrat font-bold text-white mt-1.5 leading-snug break-words">Globally Endorsed</div>
             </div>
           </div>
 
@@ -360,7 +360,7 @@ Official Email: precisionqualityserviceslabs@gmail.com
 
                   <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-2">
                     <Mail size={14} className="text-pqs-gold shrink-0" />
-                    <a href="mailto:precisionqualityserviceslabs@gmail.com" className="hover:text-pqs-gold text-slate-700 truncate font-medium">
+                    <a href="mailto:precisionqualityserviceslabs@gmail.com" className="hover:text-pqs-gold text-slate-700 break-all text-[11px] sm:text-xs font-medium">
                       precisionqualityserviceslabs@gmail.com
                     </a>
                   </div>
