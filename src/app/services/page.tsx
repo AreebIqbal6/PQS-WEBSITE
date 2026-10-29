@@ -115,24 +115,81 @@ const tabs = [
 export default function Services() {
   const [activeTab, setActiveTab] = useState<ServiceCategory>('all');
 
-  // Sync hash from URL on mount and hashchange
+  const getAbsoluteTop = (el: HTMLElement): number => {
+    let top = 0;
+    let current: HTMLElement | null = el;
+    while (current) {
+      top += current.offsetTop;
+      current = current.offsetParent as HTMLElement | null;
+    }
+    return top;
+  };
+
+  const performScroll = (tabId: ServiceCategory) => {
+    // Wait for React to re-render the filtered cards into the DOM
+    setTimeout(() => {
+      let targetEl: HTMLElement | null = null;
+      if (tabId === 'training') {
+        targetEl = document.getElementById('training');
+      } else if (tabId === 'consultancy') {
+        targetEl = document.getElementById('consultancy') || document.getElementById('consultancy-zdhc');
+      } else if (tabId === 'testing') {
+        targetEl = document.getElementById('testing');
+      }
+
+      if (!targetEl) {
+        targetEl = document.getElementById('services-list') || document.getElementById('services-catalog');
+      }
+
+      if (targetEl) {
+        // Sticky Header (~75px) + Sticky Filter Bar (~55px) + 20px breathing margin = 150px
+        const headerAndTabOffset = 150;
+        const targetTop = getAbsoluteTop(targetEl) - headerAndTabOffset;
+
+        window.scrollTo({
+          top: Math.max(0, Math.round(targetTop)),
+          behavior: 'smooth'
+        });
+      }
+    }, 60);
+  };
+
+  // Sync hash from URL on mount and hashchange/custom navigation
   useEffect(() => {
-    const syncFromHash = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash.includes('training')) {
-        setActiveTab('training');
-      } else if (hash.includes('consultancy')) {
-        setActiveTab('consultancy');
-      } else if (hash.includes('testing')) {
-        setActiveTab('testing');
-      } else if (hash === 'all') {
-        setActiveTab('all');
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    const handleNavigation = (category?: string) => {
+      const hash = (category || (typeof window !== 'undefined' ? window.location.hash.replace('#', '') : '')).toLowerCase();
+      let selected: ServiceCategory = 'all';
+      if (hash.includes('training')) selected = 'training';
+      else if (hash.includes('consultancy')) selected = 'consultancy';
+      else if (hash.includes('testing')) selected = 'testing';
+      else if (hash === 'all') selected = 'all';
+
+      setActiveTab(selected);
+      if (hash && hash !== 'all') {
+        setTimeout(() => performScroll(selected), 150);
       }
     };
 
-    syncFromHash();
-    window.addEventListener('hashchange', syncFromHash);
-    return () => window.removeEventListener('hashchange', syncFromHash);
+    handleNavigation();
+
+    const handleCustomNavigate = (e: any) => {
+      if (e?.detail?.category) {
+        handleNavigation(e.detail.category);
+      }
+    };
+
+    const handleHash = () => handleNavigation();
+
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('pqs-category-navigate', handleCustomNavigate);
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('pqs-category-navigate', handleCustomNavigate);
+    };
   }, []);
 
   const handleTabClick = (tabId: ServiceCategory) => {
@@ -142,6 +199,7 @@ export default function Services() {
     } else {
       window.history.replaceState(null, '', `/services#${tabId}`);
     }
+    performScroll(tabId);
   };
 
   const filteredServices = activeTab === 'all' 
@@ -179,22 +237,27 @@ export default function Services() {
       </section>
 
       {/* SERVICES LIST & INTERACTIVE TABS */}
-      <section id="services-catalog" className="py-20 md:py-28 relative z-30 overflow-hidden">
-        {/* Stamp Watermark */}
-        <div className="absolute top-[25%] right-[-15%] w-[800px] h-[800px] opacity-[0.025] pointer-events-none rotate-[25deg] mix-blend-multiply">
-           <img src="/stamp.png" alt="PQS Stamp" className="w-full h-full object-contain" />
+      <section id="services-catalog" className="py-16 md:py-24 relative z-30 min-h-[85vh]">
+        {/* Stamp Watermark in clipped container to keep sticky positioning intact */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[25%] right-[-15%] w-[800px] h-[800px] opacity-[0.025] rotate-[25deg] mix-blend-multiply">
+            <img src="/stamp.png" alt="PQS Stamp" className="w-full h-full object-contain" />
+          </div>
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           
-          {/* INTERACTIVE SERVICE TABS */}
-          <div className="flex flex-col items-center mb-16 md:mb-20">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pqs-navy/5 text-pqs-navy font-montserrat font-bold text-xs uppercase tracking-wider mb-5">
+          {/* Section Subtitle */}
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pqs-navy/5 text-pqs-navy font-montserrat font-bold text-xs uppercase tracking-wider">
               <ShieldCheck size={15} className="text-pqs-gold" />
               <span>Select Category to Filter</span>
             </div>
+          </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 p-2 rounded-full bg-gray-200/70 backdrop-blur-md border border-gray-300 shadow-inner max-w-3xl">
+          {/* STICKY SERVICE TABS BAR */}
+          <div className="sticky top-[68px] md:top-[76px] z-30 py-2.5 mb-14 md:mb-18 -mx-4 px-4 bg-[#fafafa]/90 backdrop-blur-xl border-b border-gray-200/60 shadow-xs flex justify-center">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300 shadow-inner max-w-3xl">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -202,13 +265,13 @@ export default function Services() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabClick(tab.id)}
-                    className={`relative flex items-center gap-2 px-5 py-3 rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-300 cursor-pointer ${
+                    className={`relative flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? 'bg-pqs-navy text-pqs-gold shadow-lg shadow-pqs-navy/30 scale-105'
+                        ? 'bg-pqs-navy text-pqs-gold shadow-md shadow-pqs-navy/30 scale-105'
                         : 'text-gray-700 hover:text-pqs-navy hover:bg-white'
                     }`}
                   >
-                    <Icon size={15} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
+                    <Icon size={14} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
                     <span>{tab.label}</span>
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'}`}>
                       {tab.count}
@@ -220,13 +283,17 @@ export default function Services() {
           </div>
 
           {/* DYNAMIC SERVICES LIST */}
-          <div className="flex flex-col gap-24 transition-opacity duration-300">
-            {filteredServices.map((service, index) => (
-              <div 
-                key={service.id} 
-                id={service.id}
-                className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center scroll-mt-36`}
-              >
+          <div id="services-list" className="flex flex-col gap-24 transition-opacity duration-300 pb-20">
+            {filteredServices.map((service, index) => {
+              const isFirstConsultancy = service.category === 'consultancy' && (index === 0 || filteredServices[index - 1]?.category !== 'consultancy');
+              const domId = isFirstConsultancy ? 'consultancy' : service.id;
+              return (
+                <div 
+                  key={service.id} 
+                  id={domId}
+                  className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center scroll-mt-40`}
+                >
+                  {isFirstConsultancy && <span id="consultancy-zdhc" className="sr-only" />}
                 
                 {/* Service Image (100% Unique & Relatable) */}
                 <div className="w-full md:w-1/2">
@@ -288,8 +355,9 @@ export default function Services() {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
         </div>
       </section>
