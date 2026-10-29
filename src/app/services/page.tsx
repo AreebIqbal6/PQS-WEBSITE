@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, BookOpen, Layers, FlaskConical, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import WhatsAppIcon from '../components/ui/WhatsAppIcon';
 
 type ServiceCategory = 'all' | 'training' | 'consultancy' | 'testing';
 
@@ -342,16 +341,6 @@ export default function Services() {
                       <span>REQUEST QUOTATION</span>
                       <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
-
-                    <a
-                      href={`https://wa.me/923009260495?text=Hello%20PQS,%20I%20would%20like%20to%20inquire%20about%20${encodeURIComponent(service.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs md:text-sm font-bold font-montserrat tracking-wider text-pqs-navy hover:text-emerald-600 transition-colors"
-                    >
-                      <WhatsAppIcon size={18} className="text-[#25D366] shrink-0" />
-                      <span>WhatsApp Inquiry</span>
-                    </a>
                   </div>
                 </div>
               </div>

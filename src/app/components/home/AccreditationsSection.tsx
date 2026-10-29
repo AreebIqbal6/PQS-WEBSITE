@@ -168,15 +168,6 @@ export default function AccreditationsSection() {
               <span>SCHEDULE AN AUDIT</span>
               <ArrowRight size={15} />
             </Link>
-
-            <a 
-              href="https://wa.me/923009260495?text=Hello%20PQS,%20I%20am%20interested%20in%20certification%20and%20audit%20readiness%20services." 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 bg-transparent border border-white/30 text-white font-montserrat font-bold text-xs tracking-widest px-7 py-4 rounded-full transition-all duration-300 hover:border-pqs-gold hover:bg-pqs-gold/10"
-            >
-              <span>WHATSAPP INQUIRY</span>
-            </a>
           </div>
         </motion.div>
 

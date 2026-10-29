@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
-import WhatsAppIcon from '../ui/WhatsAppIcon';
 
 const appleEase: any = [0.16, 1, 0.3, 1];
 const fadeInUp = { hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: appleEase } } };
@@ -97,16 +96,6 @@ export default function HeroSection() {
               <ShieldCheck size={16} className="text-pqs-gold" />
               <span>EXPLORE STANDARDS</span>
             </Link>
-
-            <a 
-              href="https://wa.me/923009260495?text=Hello%20PQS,%20I%20would%20like%20to%20inquire%20about%20your%20testing%20and%20certification%20services." 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-gray-300 hover:text-white font-montserrat font-semibold text-xs tracking-wider px-6 py-4 rounded-full border border-white/10 hover:border-emerald-400 transition-all duration-300"
-            >
-              <WhatsAppIcon size={16} className="text-[#25D366] shrink-0" />
-              <span>WHATSAPP</span>
-            </a>
           </motion.div>
 
         </motion.div>

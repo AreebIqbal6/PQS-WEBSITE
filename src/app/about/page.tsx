@@ -90,15 +90,6 @@ export default function About() {
                     <ArrowRight size={16} className="text-white group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
-
-                <a 
-                  href="https://wa.me/923009260495"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-white border border-gray-200 text-pqs-navy font-montserrat font-bold text-xs md:text-sm tracking-wider px-8 py-4 rounded-full hover:border-emerald-500 hover:text-emerald-600 transition-colors shadow-sm"
-                >
-                  <span>WHATSAPP DESK</span>
-                </a>
               </motion.div>
             </motion.div>
 

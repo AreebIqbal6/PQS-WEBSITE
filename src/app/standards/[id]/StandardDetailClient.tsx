@@ -18,7 +18,6 @@ import {
   Check,
   Award
 } from 'lucide-react';
-import WhatsAppIcon from '@/app/components/ui/WhatsAppIcon';
 import { Standard, STANDARDS_CATALOG } from '@/data/standards';
 
 interface Props {
@@ -144,15 +143,6 @@ Official Email: precisionqualityserviceslabs@gmail.com
                 <CalendarCheck size={16} />
                 <span>REQUEST AUDIT</span>
               </Link>
-              <a
-                href={`https://wa.me/923009260495?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-montserrat font-semibold text-xs border border-white/20 transition-all w-full sm:w-auto"
-              >
-                <WhatsAppIcon size={16} className="text-[#25D366] shrink-0" />
-                <span>WHATSAPP INQUIRY</span>
-              </a>
               <button
                 type="button"
                 onClick={handleDownload}
@@ -336,21 +326,11 @@ Official Email: precisionqualityserviceslabs@gmail.com
 
                 <Link
                   href={`/contact?standard=${encodeURIComponent(standard.id)}`}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider shadow-md transition-all mb-3"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider shadow-md transition-all"
                 >
                   <span>SUBMIT AUDIT APPLICATION</span>
                   <ArrowRight size={14} />
                 </Link>
-
-                <a
-                  href={`https://wa.me/923009260495?text=${whatsappMessage}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-montserrat font-semibold text-xs border border-white/20 transition-all"
-                >
-                  <WhatsAppIcon size={16} className="text-[#25D366] shrink-0" />
-                  <span>WhatsApp Direct Inquiry</span>
-                </a>
               </div>
 
               {/* Regional PQS Desk */}

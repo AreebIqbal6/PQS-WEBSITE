@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, CheckCircle2, ClipboardList, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import WhatsAppIcon from '../components/ui/WhatsAppIcon';
 import { getAuditStandards } from '@/data/standards';
 
 const auditStandards = getAuditStandards();
@@ -75,16 +74,6 @@ export default function Audits() {
                     <ArrowRight size={16} className="text-white group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
-
-                <a 
-                  href="https://wa.me/923009260495?text=Hello%20PQS,%20I%20would%20like%20to%20request%20an%20audit%20inquiry."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-white border border-gray-200 text-pqs-navy font-montserrat font-bold text-xs md:text-sm tracking-wider px-7 py-4 rounded-full hover:border-emerald-500 hover:text-emerald-600 transition-colors shadow-sm"
-                >
-                  <WhatsAppIcon size={18} className="text-[#25D366] shrink-0" />
-                  <span>WhatsApp Inquiry</span>
-                </a>
               </div>
             </div>
 
