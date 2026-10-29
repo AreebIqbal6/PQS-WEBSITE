@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, Search, ArrowRight, ArrowUpRight, ShieldCheck, Check } from 'lucide-react';
+import { Menu, X, Search, ArrowRight, ArrowUpRight, ShieldCheck, Check } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STANDARDS_CATALOG } from '@/data/standards';
@@ -11,9 +11,27 @@ export default function Header() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesMobileOpen, setServicesMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const handleOurServicesClick = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/services') {
+      e.preventDefault();
+      const catalogEl = document.getElementById('services-catalog') || document.getElementById('services-list');
+      if (catalogEl) {
+        let top = 0;
+        let current: HTMLElement | null = catalogEl;
+        while (current) {
+          top += current.offsetTop;
+          current = current.offsetParent as HTMLElement | null;
+        }
+        window.scrollTo({
+          top: Math.max(0, top - 80),
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     let lastScrolled = window.scrollY > 20;
@@ -91,53 +109,29 @@ export default function Header() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
-              <Link href="/" className="hover:text-pqs-gold transition-colors duration-200">HOME</Link>
-              
-              {/* Services Dropdown */}
-              <div className="group relative cursor-pointer flex items-center py-4">
-                <Link href="/services" className="flex items-center gap-1.5 hover:text-pqs-gold transition-colors duration-200">
-                  <span>SERVICES</span>
-                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200 text-pqs-gold" />
-                </Link>
-                
-                {/* Unbroken hover bridge */}
-                <div className="absolute top-full left-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-                  <div className="bg-[#0A1E35]/95 backdrop-blur-2xl border border-white/20 rounded-2xl p-2.5 flex flex-col gap-1 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
-                    <Link 
-                      href="/services" 
-                      onClick={() => handleDropdownClick('all')}
-                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
-                    >
-                      <span>All Services</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-pqs-gold"></span>
-                    </Link>
-                    <Link 
-                      href="/services#training" 
-                      onClick={() => handleDropdownClick('training')}
-                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
-                    >
-                      <span>Textile Training</span>
-                    </Link>
-                    <Link 
-                      href="/services#consultancy" 
-                      onClick={() => handleDropdownClick('consultancy')}
-                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
-                    >
-                      <span>Consultancy</span>
-                    </Link>
-                    <Link 
-                      href="/audits" 
-                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
-                    >
-                      <span>Audits</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <Link href="/about" className="hover:text-pqs-gold transition-colors duration-200">ABOUT US</Link>
-              <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-200">CONTACT</Link>
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
+              <Link href="/" className="hover:text-pqs-gold transition-colors duration-200">
+                HOME
+              </Link>
+              <Link 
+                href="/services" 
+                onClick={handleOurServicesClick}
+                className="hover:text-pqs-gold transition-colors duration-200 py-2"
+              >
+                OUR SERVICES
+              </Link>
+              <Link 
+                href="/audits" 
+                className="hover:text-pqs-gold transition-colors duration-200 py-2"
+              >
+                AUDITS
+              </Link>
+              <Link href="/about" className="hover:text-pqs-gold transition-colors duration-200">
+                ABOUT US
+              </Link>
+              <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-200">
+                CONTACT
+              </Link>
             </nav>
 
             {/* Right Actions */}
@@ -202,48 +196,23 @@ export default function Header() {
                   HOME
                 </Link>
                 
-                {/* Mobile Services Accordion */}
-                <div>
-                  <button 
-                    onClick={() => setServicesMobileOpen(!servicesMobileOpen)}
-                    className="flex items-center justify-between w-full hover:text-pqs-gold transition-colors py-1"
-                  >
-                    <span>SERVICES</span>
-                    <ChevronDown size={16} className={`transition-transform duration-300 ${servicesMobileOpen ? 'rotate-180 text-pqs-gold' : ''}`} />
-                  </button>
-                  {servicesMobileOpen && (
-                    <div className="flex flex-col gap-3 pl-4 pt-3 border-l-2 border-pqs-gold/40 mt-2">
-                      <Link 
-                        href="/services" 
-                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('all'); }}
-                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
-                      >
-                        All Services
-                      </Link>
-                      <Link 
-                        href="/services#training" 
-                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('training'); }}
-                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
-                      >
-                        Textile Training
-                      </Link>
-                      <Link 
-                        href="/services#consultancy" 
-                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('consultancy'); }}
-                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
-                      >
-                        Consultancy
-                      </Link>
-                      <Link 
-                        href="/audits" 
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
-                      >
-                        Audits
-                      </Link>
-                    </div>
-                  )}
-                </div>
+                <Link 
+                  href="/services" 
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleOurServicesClick(e);
+                  }}
+                  className="hover:text-pqs-gold transition-colors py-1"
+                >
+                  OUR SERVICES
+                </Link>
+                <Link 
+                  href="/audits" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-pqs-gold transition-colors py-1"
+                >
+                  AUDITS
+                </Link>
 
                 <Link 
                   href="/about" 
