@@ -226,7 +226,7 @@ export default function Services() {
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-5">
-              Testing &amp; Compliance Services
+              Our Services
             </h1>
             
             <p className="text-gray-300 font-lato text-lg md:text-xl max-w-2xl font-light leading-relaxed">

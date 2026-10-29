@@ -64,7 +64,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/services" className="hover:text-pqs-gold hover:translate-x-1 transition-all inline-block">
-                  Testing &amp; Services
+                  Our Services
                 </Link>
               </li>
               <li>
