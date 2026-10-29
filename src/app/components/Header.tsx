@@ -95,7 +95,7 @@ export default function Header() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className={`flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
             (isScrolled || mobileMenuOpen)
-              ? 'bg-[#0A1E35]/95 backdrop-blur-xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.4)] px-6 py-2.5 text-white' 
+              ? 'bg-[#0A1E35]/50 backdrop-blur-2xl saturate-180 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.3)] px-6 py-2.5 text-white' 
               : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
           }`}>
             {/* Logo */}
