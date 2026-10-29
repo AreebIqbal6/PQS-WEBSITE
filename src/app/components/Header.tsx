@@ -1,107 +1,381 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown, Search, Globe } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Menu, X, ChevronDown, Search, ArrowRight, ArrowUpRight, ShieldCheck, Check } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { STANDARDS_CATALOG } from '@/data/standards';
 
 export default function Header() {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesMobileOpen, setServicesMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    let lastScrolled = window.scrollY > 20;
+    setIsScrolled(lastScrolled);
+
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrolled = window.scrollY > 20;
+          if (currentScrolled !== lastScrolled) {
+            lastScrolled = currentScrolled;
+            setIsScrolled(currentScrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle escape key to close search modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSearchOpen(false);
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleDropdownClick = (category: string) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/services') {
+      window.location.hash = category;
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
+  };
+
+  const filteredStandards = STANDARDS_CATALOG.filter((s) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      s.code.toLowerCase().includes(q) ||
+      s.name.toLowerCase().includes(q) ||
+      s.title.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q)
+    );
+  });
+
   return (
-    <header className={`fixed w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'py-3' : 'py-6'}`}>
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className={`flex justify-between items-center transition-all duration-500 rounded-full px-6 py-3 ${
-          isScrolled 
-            ? 'bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.1)]' 
-            : 'bg-transparent border border-transparent shadow-none'
-        }`}>
-          {/* Logo */}
-          <Link href="/" className="flex items-center group relative z-50">
-            <Image 
-              src="/logo_transparent_v2.png" 
-              alt="PQS Logo" 
-              width={220} 
-              height={40} 
-              className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${isScrolled ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[220px]'} h-auto`}
-              style={{ filter: isScrolled ? 'brightness(0)' : 'none' }}
-            />
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className={`hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider transition-colors duration-500 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`}>
-            <Link href="/" className="hover:text-pqs-gold transition-colors duration-300">HOME</Link>
-            <div className="group relative cursor-pointer flex items-center gap-1 hover:text-pqs-gold transition-colors duration-300 py-4">
-              SERVICES <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
-              {/* Dropdown glass menu */}
-              <div className={`absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-xl p-4 flex flex-col gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.1)] ${isScrolled ? 'bg-white/70 backdrop-blur-xl border border-white/50' : 'bg-black/40 backdrop-blur-xl border border-white/10'}`}>
-                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>All Services</Link>
-                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Textile Training</Link>
-                <Link href="/services" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Consultancy</Link>
-                <Link href="/audits" className={`${isScrolled ? 'text-pqs-navy' : 'text-white'} hover:text-pqs-gold transition-colors`}>Audits</Link>
-              </div>
-            </div>
-            <Link href="/about" className="hover:text-pqs-gold transition-colors duration-300">ABOUT US</Link>
-            <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-300">CONTACT</Link>
-          </nav>
-
-          {/* Right Actions */}
-          <div className={`hidden lg:flex items-center gap-6 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`}>
-            <button className="hover:text-pqs-gold transition-colors duration-300 hover:scale-110"><Search size={20} /></button>
-            <Link href="/contact" className={`px-7 py-2.5 rounded-full font-bold font-montserrat tracking-wide text-xs transition-all duration-300 hover:-translate-y-0.5 ${isScrolled ? 'bg-pqs-navy text-white hover:bg-pqs-gold hover:text-pqs-navy shadow-[0_10px_20px_rgba(10,30,53,0.15)]' : 'bg-pqs-gold text-pqs-navy hover:bg-white hover:text-black shadow-[0_0_20px_rgba(200,169,81,0.2)]'}`}>
-              GET A QUOTE
+    <>
+      <header className={`fixed w-full z-50 transition-all duration-300 ease-out ${isScrolled ? 'py-2.5' : 'py-5'}`}>
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className={`flex justify-between items-center transition-all duration-300 rounded-full px-6 py-2.5 ${
+            isScrolled 
+              ? 'bg-[#0A1E35]/95 backdrop-blur-xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.4)] text-white' 
+              : 'bg-[#0A1E35]/60 backdrop-blur-lg border border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-white'
+          }`}>
+            {/* Logo */}
+            <Link href="/" className="flex items-center group relative z-50" title="PQS - Precision Quality Services">
+              <Image 
+                src="/logo_transparent_v2.png" 
+                alt="PQS Logo" 
+                width={220} 
+                height={40} 
+                priority
+                className={`object-contain transition-all duration-300 ease-out group-hover:scale-105 ${isScrolled ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[210px]'} h-auto`}
+              />
             </Link>
-          </div>
 
-          {/* Mobile Toggle */}
-          <button 
-            className={`lg:hidden hover:scale-110 transition-transform relative z-50 p-2 ${isScrolled ? 'text-pqs-navy' : 'text-white'}`} 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-          </button>
-        </div>
-      </div>
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
+              <Link href="/" className="hover:text-pqs-gold transition-colors duration-200">HOME</Link>
+              
+              {/* Services Dropdown */}
+              <div className="group relative cursor-pointer flex items-center py-4">
+                <Link href="/services" className="flex items-center gap-1.5 hover:text-pqs-gold transition-colors duration-200">
+                  <span>SERVICES</span>
+                  <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200 text-pqs-gold" />
+                </Link>
+                
+                {/* Unbroken hover bridge */}
+                <div className="absolute top-full left-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
+                  <div className="bg-[#0A1E35]/95 backdrop-blur-2xl border border-white/20 rounded-2xl p-2.5 flex flex-col gap-1 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                    <Link 
+                      href="/services" 
+                      onClick={() => handleDropdownClick('all')}
+                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
+                    >
+                      <span>All Services</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-pqs-gold"></span>
+                    </Link>
+                    <Link 
+                      href="/services#training" 
+                      onClick={() => handleDropdownClick('training')}
+                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
+                    >
+                      <span>Textile Training</span>
+                    </Link>
+                    <Link 
+                      href="/services#consultancy" 
+                      onClick={() => handleDropdownClick('consultancy')}
+                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
+                    >
+                      <span>Consultancy</span>
+                    </Link>
+                    <Link 
+                      href="/audits" 
+                      className="px-3.5 py-2.5 rounded-xl text-white hover:text-pqs-gold hover:bg-white/10 transition-all flex items-center justify-between text-xs font-montserrat font-bold tracking-wider"
+                    >
+                      <span>Audits</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
 
-      {/* Mobile Menu - Dropdown */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className={`lg:hidden absolute top-full left-0 w-full bg-white/70 border-t border-white/50 text-pqs-navy backdrop-blur-xl flex flex-col items-center py-8 gap-6 font-montserrat z-40 shadow-[0_8px_32px_rgba(0,0,0,0.1)]`}
-          >
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} >
-              <Link href="/" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>HOME</Link>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} >
-              <Link href="/services" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>SERVICES</Link>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} >
-              <Link href="/about" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>ABOUT US</Link>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} >
-              <Link href="/contact" className="text-xl font-bold tracking-widest hover:text-pqs-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mt-4">
-              <Link href="/contact" className={`px-8 py-3 rounded-full font-bold text-sm tracking-widest transition-colors bg-pqs-navy text-white hover:bg-pqs-gold hover:text-pqs-navy shadow-[0_10px_20px_rgba(10,30,53,0.15)]`} onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/about" className="hover:text-pqs-gold transition-colors duration-200">ABOUT US</Link>
+              <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-200">CONTACT</Link>
+            </nav>
+
+            {/* Right Actions */}
+            <div className="hidden lg:flex items-center gap-6">
+              {/* Interactive Search Icon */}
+              <button 
+                type="button"
+                onClick={() => setSearchOpen(true)}
+                className="text-white hover:text-pqs-gold transition-colors duration-200 cursor-pointer p-1.5 rounded-full hover:bg-white/10"
+                title="Search standards and services (Ctrl+K)"
+                aria-label="Open search"
+              >
+                <Search size={18} />
+              </button>
+
+              <Link 
+                href="/contact" 
+                className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              >
                 GET A QUOTE
               </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <button 
+                type="button"
+                onClick={() => setSearchOpen(true)}
+                className="text-white p-2 focus:outline-hidden"
+                aria-label="Search"
+              >
+                <Search size={20} />
+              </button>
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+                className="text-white p-2 focus:outline-hidden"
+                aria-label="Toggle Navigation Menu"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Mobile Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="lg:hidden container mx-auto px-4 mt-3"
+            >
+              <div className="bg-[#0A1E35]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 flex flex-col gap-5 text-white font-montserrat font-bold text-sm tracking-wider shadow-2xl">
+                <Link 
+                  href="/" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-pqs-gold transition-colors py-1"
+                >
+                  HOME
+                </Link>
+                
+                {/* Mobile Services Accordion */}
+                <div>
+                  <button 
+                    onClick={() => setServicesMobileOpen(!servicesMobileOpen)}
+                    className="flex items-center justify-between w-full hover:text-pqs-gold transition-colors py-1"
+                  >
+                    <span>SERVICES</span>
+                    <ChevronDown size={16} className={`transition-transform duration-300 ${servicesMobileOpen ? 'rotate-180 text-pqs-gold' : ''}`} />
+                  </button>
+                  {servicesMobileOpen && (
+                    <div className="flex flex-col gap-3 pl-4 pt-3 border-l-2 border-pqs-gold/40 mt-2">
+                      <Link 
+                        href="/services" 
+                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('all'); }}
+                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
+                      >
+                        All Services
+                      </Link>
+                      <Link 
+                        href="/services#training" 
+                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('training'); }}
+                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
+                      >
+                        Textile Training
+                      </Link>
+                      <Link 
+                        href="/services#consultancy" 
+                        onClick={() => { setMobileMenuOpen(false); handleDropdownClick('consultancy'); }}
+                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
+                      >
+                        Consultancy
+                      </Link>
+                      <Link 
+                        href="/audits" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-xs text-gray-300 hover:text-pqs-gold py-1"
+                      >
+                        Audits
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                <Link 
+                  href="/about" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-pqs-gold transition-colors py-1"
+                >
+                  ABOUT US
+                </Link>
+
+                <Link 
+                  href="/contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="hover:text-pqs-gold transition-colors py-1"
+                >
+                  CONTACT
+                </Link>
+
+                <Link 
+                  href="/contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider px-6 py-3 rounded-full text-center transition-all duration-300 shadow-md mt-2"
+                >
+                  GET A QUOTE
+                </Link>
+              </div>
             </motion.div>
-          </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Interactive Quick Search Modal */}
+      <AnimatePresence>
+        {searchOpen && (
+          <div 
+            className="fixed inset-0 z-[100] flex items-start justify-center p-4 sm:p-6 pt-24 sm:pt-28"
+            onClick={() => setSearchOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-[#061221]/80 backdrop-blur-md"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden z-10 text-slate-800"
+            >
+              {/* Search Bar Input */}
+              <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center gap-3">
+                <Search size={20} className="text-pqs-gold shrink-0" />
+                <input
+                  type="text"
+                  autoFocus
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search standards (ISO 17025, GOTS, ZDHC, PPWR, CE)..."
+                  className="w-full text-slate-900 placeholder:text-slate-400 font-montserrat text-sm outline-none bg-transparent"
+                />
+                {searchQuery && (
+                  <button 
+                    onClick={() => setSearchQuery('')}
+                    className="text-slate-400 hover:text-slate-700 text-xs px-2 py-1 rounded bg-slate-100"
+                  >
+                    Clear
+                  </button>
+                )}
+                <button
+                  onClick={() => setSearchOpen(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center shrink-0"
+                  aria-label="Close search"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Search Results List */}
+              <div className="max-h-[60vh] overflow-y-auto p-4 space-y-2">
+                <div className="text-[11px] font-montserrat font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">
+                  Accredited Standards ({filteredStandards.length})
+                </div>
+
+                {filteredStandards.map((std) => (
+                  <Link
+                    key={std.id}
+                    href={`/standards/${std.id}`}
+                    onClick={() => setSearchOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 p-1 flex items-center justify-center shrink-0">
+                        <Image src={std.badgeImg} alt={std.name} width={36} height={36} className="object-contain" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-montserrat font-bold text-xs text-slate-900 group-hover:text-pqs-navy truncate">
+                          {std.code} &bull; <span className="font-semibold text-slate-600">{std.name}</span>
+                        </div>
+                        <div className="text-[11px] font-lato text-slate-500 truncate">
+                          {std.tagline}
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowUpRight size={14} className="text-slate-400 group-hover:text-pqs-gold group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+                  </Link>
+                ))}
+
+                {filteredStandards.length === 0 && (
+                  <div className="text-center py-10 text-slate-400 text-sm font-lato">
+                    No standards matching "{searchQuery}".
+                  </div>
+                )}
+              </div>
+
+              {/* Bottom Quick Links */}
+              <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs font-montserrat text-slate-500 px-4">
+                <span>Quick jump: <kbd className="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-[10px]">ESC</kbd> to close</span>
+                <Link 
+                  href="/services" 
+                  onClick={() => setSearchOpen(false)}
+                  className="text-pqs-gold hover:underline font-bold"
+                >
+                  View All Services &rarr;
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

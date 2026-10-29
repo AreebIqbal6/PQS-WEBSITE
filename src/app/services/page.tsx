@@ -1,15 +1,27 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, ShieldCheck, MessageCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, CheckCircle2, ShieldCheck, BookOpen, Layers, FlaskConical, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import WhatsAppIcon from '../components/ui/WhatsAppIcon';
 
-const appleEase: any = [0.16, 1, 0.3, 1];
-const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 1, ease: appleEase } } };
-const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+type ServiceCategory = 'all' | 'training' | 'consultancy' | 'testing';
 
-const services = [
+interface ServiceItem {
+  id: string;
+  category: ServiceCategory;
+  categoryLabel: string;
+  title: string;
+  badge: string;
+  desc: string;
+  img: string;
+  deliverables: string[];
+}
+
+const services: ServiceItem[] = [
   {
+    id: "testing",
+    category: "testing",
+    categoryLabel: "Laboratory Testing",
     title: "ISO 17025 Laboratory Testing & Verification",
     badge: "Testing & Calibration Competence",
     desc: "Rigorous testing protocols for physical textile parameters, chemical safety, fiber blend validation, and colorfastness. Testing reports accepted by international regulatory bodies and global retail brands.",
@@ -21,6 +33,9 @@ const services = [
     ]
   },
   {
+    id: "consultancy-zdhc",
+    category: "consultancy",
+    categoryLabel: "Technical Consultancy",
     title: "Chemical & Wastewater Management (ZDHC MRSL)",
     badge: "Roadmap to Zero Hazardous Chemicals",
     desc: "Complete implementation of the ZDHC Manufacturing Restricted Substances List (MRSL), chemical inventory management, and wastewater discharge verification for sustainable dyehouses and wet processing units.",
@@ -32,6 +47,9 @@ const services = [
     ]
   },
   {
+    id: "consultancy-sustainability",
+    category: "consultancy",
+    categoryLabel: "Technical Consultancy",
     title: "Sustainability & Traceability (GOTS & GRS)",
     badge: "Organic Fibers & Recycled Claim Standard",
     desc: "Comprehensive chain-of-custody advisory for Global Organic Textile Standard (GOTS) and Global Recycled Standard (GRS), ensuring full transparency and compliance from raw fiber to final garments.",
@@ -43,6 +61,9 @@ const services = [
     ]
   },
   {
+    id: "consultancy-circularity",
+    category: "consultancy",
+    categoryLabel: "Technical Consultancy",
     title: "Circular Plastics & Packaging (PPWR & EN 15343)",
     badge: "EU Circular Economy Compliance",
     desc: "Specialized auditing for post-consumer recycled plastic content and preparation for the European Union's Packaging and Packaging Waste Regulation (PPWR), establishing documented recycled content traceability.",
@@ -54,6 +75,9 @@ const services = [
     ]
   },
   {
+    id: "consultancy-qms",
+    category: "consultancy",
+    categoryLabel: "Technical Consultancy",
     title: "Quality Management Systems (ISO 9001:2015 & CE)",
     badge: "Factory Performance & European Conformity",
     desc: "End-to-end consulting for ISO 9001:2015 QMS certification and CE marking technical files. We establish Standard Operating Procedures (SOPs), CAPA root-cause defect loops, and supplier audit frameworks.",
@@ -65,61 +89,149 @@ const services = [
     ]
   },
   {
+    id: "training",
+    category: "training",
+    categoryLabel: "Textile Training",
     title: "Factory-Floor Training & Defect Troubleshooting",
-    badge: "Operational Excellence",
-    desc: "Hands-on, floor-level training for quality inspectors, machine operators, and lab technicians. We teach practical root-cause analysis right at the machines to build sustainable zero-defect cultures.",
-    img: "/inspector.jpg",
+    badge: "Operational Excellence & Hands-On Training",
+    desc: "Hands-on, floor-level training for quality inspectors, machine operators, and lab technicians. We teach practical root-cause analysis right at the machines to eliminate recurring defects and build sustainable zero-defect cultures.",
+    img: "/training.jpg",
     deliverables: [
-      "Real-time defect mapping and elimination",
-      "Standard testing procedure hands-on training",
-      "Statistical process control & yield improvement"
+      "Practical textile quality management & defect identification",
+      "Root cause analysis (RCA) & machine-level CAPA implementation",
+      "Quality control fundamentals & standard inspection protocols",
+      "Statistical process control & yield improvement on production lines"
     ]
   }
 ];
 
+const tabs = [
+  { id: 'all' as ServiceCategory, label: 'All Services', icon: Sparkles, count: 6 },
+  { id: 'training' as ServiceCategory, label: 'Textile Training', icon: BookOpen, count: 1 },
+  { id: 'consultancy' as ServiceCategory, label: 'Consultancy', icon: Layers, count: 4 },
+  { id: 'testing' as ServiceCategory, label: 'Laboratory Testing', icon: FlaskConical, count: 1 },
+];
+
 export default function Services() {
+  const [activeTab, setActiveTab] = useState<ServiceCategory>('all');
+
+  // Sync hash from URL on mount and hashchange
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash.includes('training')) {
+        setActiveTab('training');
+      } else if (hash.includes('consultancy')) {
+        setActiveTab('consultancy');
+      } else if (hash.includes('testing')) {
+        setActiveTab('testing');
+      } else if (hash === 'all') {
+        setActiveTab('all');
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  const handleTabClick = (tabId: ServiceCategory) => {
+    setActiveTab(tabId);
+    if (tabId === 'all') {
+      window.history.replaceState(null, '', '/services');
+    } else {
+      window.history.replaceState(null, '', `/services#${tabId}`);
+    }
+  };
+
+  const filteredServices = activeTab === 'all' 
+    ? services 
+    : services.filter(s => s.category === activeTab);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#fafafa]">
       
-      {/* HEADER */}
-      <section className="relative h-[55vh] min-h-[440px] flex items-end pb-20 pt-32 overflow-hidden bg-pqs-dark">
-        <div className="absolute inset-0 z-0 bg-[url('/unsplash_0.jpg')] bg-cover bg-center opacity-30 mix-blend-luminosity"></div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-pqs-dark via-pqs-dark/80 to-transparent"></div>
+      {/* HEADER / HERO BANNER */}
+      {/* Generous top padding (pt-44 md:pt-52) and minimum height ensures 'WHAT WE DO' has ample clearance below the top navbar word banner */}
+      <section className="relative min-h-[500px] md:min-h-[560px] flex flex-col justify-center pt-44 md:pt-52 pb-24 overflow-hidden bg-pqs-dark">
+        <div className="absolute inset-0 z-0 bg-[url('/services_hero.jpg')] bg-cover bg-center opacity-35 mix-blend-luminosity scale-105 transition-transform duration-1000"></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-pqs-dark via-pqs-dark/85 to-pqs-dark/50"></div>
         
         <div className="container mx-auto px-4 lg:px-8 relative z-20">
-          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl">
-            <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-4">
+          <div className="max-w-4xl">
+            {/* Tagline / Subtitle with generous spacing */}
+            <div className="flex items-center gap-4 mb-5 pt-6">
               <div className="h-[2px] w-12 bg-pqs-gold"></div>
-              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs">
+              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
                 WHAT WE DO &bull; MAKING COMPLIANCE REAL
               </h2>
-            </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-4">
+            </div>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-5">
               Testing &amp; Compliance Services
-            </motion.h1>
-            <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg max-w-2xl font-light">
-              From accredited laboratory verification and ZDHC chemical protocols to GOTS/GRS sustainability standards and ISO 9001 systems.
-            </motion.p>
-          </motion.div>
+            </h1>
+            
+            <p className="text-gray-300 font-lato text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+              From accredited laboratory verification and ZDHC chemical protocols to GOTS/GRS sustainability standards and factory-floor textile training.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* SERVICES LIST */}
-      <section className="py-24 relative z-30 overflow-hidden">
+      {/* SERVICES LIST & INTERACTIVE TABS */}
+      <section id="services-catalog" className="py-20 md:py-28 relative z-30 overflow-hidden">
         {/* Stamp Watermark */}
-        <div className="absolute top-[30%] right-[-15%] w-[800px] h-[800px] opacity-[0.02] pointer-events-none rotate-[25deg] mix-blend-multiply">
+        <div className="absolute top-[25%] right-[-15%] w-[800px] h-[800px] opacity-[0.025] pointer-events-none rotate-[25deg] mix-blend-multiply">
            <img src="/stamp.png" alt="PQS Stamp" className="w-full h-full object-contain" />
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={staggerContainer} className="flex flex-col gap-24">
-            
-            {services.map((service, index) => (
-              <motion.div key={index} variants={fadeInUp} className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center`}>
+          
+          {/* INTERACTIVE SERVICE TABS */}
+          <div className="flex flex-col items-center mb-16 md:mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pqs-navy/5 text-pqs-navy font-montserrat font-bold text-xs uppercase tracking-wider mb-5">
+              <ShieldCheck size={15} className="text-pqs-gold" />
+              <span>Select Category to Filter</span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 p-2 rounded-full bg-gray-200/70 backdrop-blur-md border border-gray-300 shadow-inner max-w-3xl">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabClick(tab.id)}
+                    className={`relative flex items-center gap-2 px-5 py-3 rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-300 cursor-pointer ${
+                      isActive
+                        ? 'bg-pqs-navy text-pqs-gold shadow-lg shadow-pqs-navy/30 scale-105'
+                        : 'text-gray-700 hover:text-pqs-navy hover:bg-white'
+                    }`}
+                  >
+                    <Icon size={15} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
+                    <span>{tab.label}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'}`}>
+                      {tab.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* DYNAMIC SERVICES LIST */}
+          <div className="flex flex-col gap-24 transition-opacity duration-300">
+            {filteredServices.map((service, index) => (
+              <div 
+                key={service.id} 
+                id={service.id}
+                className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center scroll-mt-36`}
+              >
                 
+                {/* Service Image (100% Unique & Relatable) */}
                 <div className="w-full md:w-1/2">
-                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl group border border-gray-100">
-                    <motion.div 
+                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl group border border-gray-100 bg-gray-900">
+                    <div 
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
                       style={{ backgroundImage: `url('${service.img}')` }}
                     />
@@ -127,17 +239,21 @@ export default function Services() {
                   </div>
                 </div>
 
+                {/* Service Details */}
                 <div className="w-full md:w-1/2 md:px-8">
                   <div className="text-pqs-gold font-montserrat font-black text-6xl md:text-8xl opacity-20 mb-[-2rem] ml-[-1rem]">
                     0{index + 1}
                   </div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pqs-navy/5 text-pqs-navy text-xs font-montserrat font-bold uppercase tracking-wider mb-3">
+                  
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pqs-navy/5 text-pqs-navy text-xs font-montserrat font-bold uppercase tracking-wider mb-3">
                     <ShieldCheck size={14} className="text-pqs-gold" />
                     <span>{service.badge}</span>
                   </div>
+
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-montserrat font-black text-pqs-navy mb-4 leading-snug">
                     {service.title}
                   </h2>
+                  
                   <p className="text-gray-600 font-lato text-base md:text-lg leading-relaxed mb-6 font-light">
                     {service.desc}
                   </p>
@@ -151,7 +267,7 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-4">
                     <Link 
                       href="/contact" 
                       className="inline-flex items-center gap-3 text-xs md:text-sm font-bold font-montserrat tracking-widest text-white bg-pqs-navy px-6 py-3.5 rounded-full hover:bg-pqs-gold hover:text-pqs-navy transition-all shadow-md group"
@@ -166,15 +282,15 @@ export default function Services() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-xs md:text-sm font-bold font-montserrat tracking-wider text-pqs-navy hover:text-emerald-600 transition-colors"
                     >
-                      <MessageCircle size={17} className="text-emerald-500" />
+                      <WhatsAppIcon size={18} className="text-[#25D366] shrink-0" />
                       <span>WhatsApp Inquiry</span>
                     </a>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
+          </div>
 
-          </motion.div>
         </div>
       </section>
 

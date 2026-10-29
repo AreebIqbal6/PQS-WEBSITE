@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X } from 'lucide-react';
+import { X } from 'lucide-react';
+import WhatsAppIcon from './ui/WhatsAppIcon';
 
 export default function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,14 +30,14 @@ export default function FloatingWhatsApp() {
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                 aria-label="Close WhatsApp chat popup"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <p className="text-gray-300 font-lato text-xs leading-relaxed mb-4">
+            <p className="text-gray-300 font-lato text-xs leading-relaxed mb-4 font-light">
               Connect directly with our technical team for instant quotations, audit inquiries, and testing protocols.
             </p>
 
@@ -44,24 +45,24 @@ export default function FloatingWhatsApp() {
               href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-montserrat font-bold text-xs tracking-wider transition-colors shadow-lg"
+              className="flex items-center justify-center gap-2.5 w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-montserrat font-bold text-xs tracking-wider transition-all shadow-lg active:scale-95"
             >
-              <MessageCircle size={16} />
+              <WhatsAppIcon size={18} className="text-white shrink-0" />
               <span>START WHATSAPP CHAT</span>
             </a>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button */}
+      {/* Floating Action Button with Real WhatsApp Icon */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_8px_30px_rgba(37,211,102,0.4)] border-2 border-white/30 hover:border-pqs-gold transition-all"
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_8px_30px_rgba(37,211,102,0.45)] border-2 border-white/40 hover:border-pqs-gold transition-all cursor-pointer"
         aria-label="Chat on WhatsApp with Precision Quality Services"
       >
-        <MessageCircle size={28} className="text-white" />
+        <WhatsAppIcon size={30} className="text-white drop-shadow-xs" />
         <span className="absolute -top-1 -right-1 flex h-4 w-4">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pqs-gold opacity-75"></span>
           <span className="relative inline-flex rounded-full h-4 w-4 bg-pqs-gold border-2 border-white"></span>

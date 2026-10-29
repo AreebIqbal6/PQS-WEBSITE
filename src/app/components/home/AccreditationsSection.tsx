@@ -1,97 +1,17 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ShieldCheck, CheckCircle2, FileCheck2 } from 'lucide-react';
+import { getAccreditationStandards } from '@/data/standards';
+import AuditSpecModal from '../ui/AuditSpecModal';
 
-const appleEase: any = [0.16, 1, 0.3, 1];
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: appleEase } }
-};
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } }
-};
-
-interface Certification {
-  id: string;
-  name: string;
-  badgeImg: string;
-  tagline: string;
-  scope: string;
-  features: string[];
-}
-
-const certifications: Certification[] = [
-  {
-    id: "iso-17025",
-    name: "ISO 17025 Accredited",
-    badgeImg: "/certifications/card/iso_17025.png",
-    tagline: "Testing & Calibration Laboratories",
-    scope: "International standard demonstrating technical competence, precision measurement, and validated laboratory test data.",
-    features: ["Physical & Chemical Testing", "Calibration Traceability", "Globally Accepted Reports"]
-  },
-  {
-    id: "iso-9001",
-    name: "ISO 9001:2015",
-    badgeImg: "/certifications/card/iso_9001_2015.png",
-    tagline: "Quality Management Systems",
-    scope: "Standardized QMS implementation, CAPA defect elimination, and continuous process optimization across factories.",
-    features: ["Risk-Based Process Audits", "Zero-Defect Quality Control", "Supplier Evaluation"]
-  },
-  {
-    id: "zdhc",
-    name: "ZDHC Gateway & MRSL",
-    badgeImg: "/certifications/card/zdhc.png",
-    tagline: "Roadmap to Zero Hazardous Chemicals",
-    scope: "Elimination of hazardous substances in textile processing, chemical inventory compliance, and wastewater testing.",
-    features: ["MRSL Level Conformance", "Wastewater Discharge Testing", "Chemical Management Audits"]
-  },
-  {
-    id: "gots",
-    name: "GOTS Certified",
-    badgeImg: "/certifications/card/gots.png",
-    tagline: "Global Organic Textile Standard",
-    scope: "World-leading textile processing standard for organic fibers, integrating environmental and strict social criteria.",
-    features: ["Organic Chain of Custody", "Residue & Toxin Screening", "Transaction Verification"]
-  },
-  {
-    id: "grs",
-    name: "GRS Standard",
-    badgeImg: "/certifications/card/grs.png",
-    tagline: "Global Recycled Standard",
-    scope: "Verification of recycled material content, chain of custody, chemical restrictions, and responsible manufacturing.",
-    features: ["Recycled Input Tracking", "Environmental Management", "Supply Chain Transparency"]
-  },
-  {
-    id: "ppwr",
-    name: "EU PPWR Compliance",
-    badgeImg: "/certifications/card/ppwr.png",
-    tagline: "Packaging & Packaging Waste Regulation",
-    scope: "European Union circularity regulations enforcing packaging reduction, recyclability grades, and recycled plastic quotas.",
-    features: ["Circularity Assessment", "Design for Recyclability", "Substance Restriction Checks"]
-  },
-  {
-    id: "en-15343",
-    name: "EN 15343 Recycled Plastics",
-    badgeImg: "/certifications/card/en_15343.png",
-    tagline: "Traceability & Recycled Content",
-    scope: "European standard specifying procedures needed for traceability of recycled plastics and conformity assessment.",
-    features: ["Post-Consumer Traceability", "Recycled Content % Auditing", "Batch Verification"]
-  },
-  {
-    id: "ce-marking",
-    name: "CE Marking",
-    badgeImg: "/certifications/card/ce_marking.png",
-    tagline: "European Conformity",
-    scope: "Validation that industrial, PPE, and textile products comply with European safety, health, and environmental directives.",
-    features: ["Technical File Documentation", "Essential Safety Assessment", "Declaration of Conformity"]
-  }
-];
+const certifications = getAccreditationStandards();
 
 export default function AccreditationsSection() {
+  const [specModalId, setSpecModalId] = useState<string | null>(null);
+
   return (
     <section id="accreditations" className="py-28 relative z-20 bg-pqs-dark noise-bg border-t border-b border-pqs-gold/20 overflow-hidden">
       {/* Background Ambient Glows */}
@@ -101,14 +21,14 @@ export default function AccreditationsSection() {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <motion.div 
-          initial="hidden" 
-          whileInView="visible" 
-          viewport={{ once: true, margin: "-10%" }} 
-          variants={staggerContainer}
-          className="text-center max-w-4xl mx-auto mb-20"
-        >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-pqs-gold/30 backdrop-blur-md mb-6">
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-pqs-gold/30 backdrop-blur-md mb-6"
+          >
             <ShieldCheck size={16} className="text-pqs-gold" />
             <span className="text-pqs-gold font-montserrat font-bold text-xs tracking-[0.25em] uppercase">
               ACCREDITED COMPLIANCE FRAMEWORKS &bull; GLOBAL STANDARDS
@@ -116,7 +36,10 @@ export default function AccreditationsSection() {
           </motion.div>
 
           <motion.h2 
-            variants={fadeInUp} 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-black text-white leading-tight tracking-tight mb-6"
           >
             Making Compliance Real Across <br className="hidden md:block" />
@@ -125,33 +48,39 @@ export default function AccreditationsSection() {
             </span>
           </motion.h2>
 
-          <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg md:text-xl font-light leading-relaxed">
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-300 font-lato text-lg md:text-xl font-light leading-relaxed"
+          >
             Precision Quality Services (PQS) bridges factory floor execution with rigorous international accreditation. We prepare, audit, test, and certify your operations for premier global buyers.
           </motion.p>
-        </motion.div>
+        </div>
 
         {/* 8 Certification Grid */}
-        <motion.div 
-          initial="hidden" 
-          whileInView="visible" 
-          viewport={{ once: true, margin: "-5%" }} 
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {certifications.map((cert) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {certifications.map((cert, index) => (
             <motion.div 
               key={cert.id}
-              variants={fadeInUp}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-              className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-pqs-gold/50 p-6 flex flex-col justify-between transition-all duration-500 hover:shadow-[0_12px_40px_rgba(200,169,81,0.15)]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.06 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-pqs-gold/50 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(200,169,81,0.15)]"
             >
               {/* Top Accent Gradient on Hover */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pqs-gold/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pqs-gold/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl" />
 
               <div>
                 {/* Badge Card Wrapper */}
-                <div className="bg-[#FFFFFF] rounded-xl p-3 mb-6 shadow-md border border-gray-100 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
+                <Link 
+                  href={`/standards/${cert.id}`}
+                  className="block bg-[#FFFFFF] rounded-xl p-3 mb-6 shadow-md border border-gray-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+                  title={`View ${cert.name} certification specification`}
+                >
                   <div className="relative w-full h-24">
                     <Image 
                       src={cert.badgeImg} 
@@ -161,15 +90,18 @@ export default function AccreditationsSection() {
                       className="object-contain p-1" 
                     />
                   </div>
-                </div>
+                </Link>
 
                 {/* Title & Tagline */}
-                <h3 className="text-xl font-montserrat font-bold text-white group-hover:text-pqs-gold transition-colors mb-1">
-                  {cert.name}
-                </h3>
-                <div className="text-pqs-gold font-lato text-xs font-semibold tracking-wider uppercase mb-3">
-                  {cert.tagline}
-                </div>
+                <Link href={`/standards/${cert.id}`} className="block group/link">
+                  <h3 className="text-xl font-montserrat font-bold text-white group-hover:text-pqs-gold transition-colors mb-1 flex items-center justify-between">
+                    <span>{cert.name}</span>
+                    <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 text-pqs-gold transition-all" />
+                  </h3>
+                  <div className="text-pqs-gold font-lato text-xs font-semibold tracking-wider uppercase mb-3">
+                    {cert.tagline}
+                  </div>
+                </Link>
 
                 {/* Scope Description */}
                 <p className="text-gray-400 font-lato text-sm leading-relaxed mb-6 font-light">
@@ -177,9 +109,9 @@ export default function AccreditationsSection() {
                 </p>
               </div>
 
-              {/* Bullet Features */}
+              {/* Bullet Features & Specification Actions */}
               <div className="border-t border-white/10 pt-4 mt-auto">
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-2 mb-5">
                   {cert.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-xs text-gray-300 font-lato">
                       <CheckCircle2 size={13} className="text-pqs-gold shrink-0" />
@@ -187,17 +119,36 @@ export default function AccreditationsSection() {
                     </li>
                   ))}
                 </ul>
+
+                {/* View Specification Button & Direct Page Link */}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSpecModalId(cert.id)}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-xs tracking-wider border border-white/15 transition-all cursor-pointer active:scale-[0.98] group/btn"
+                  >
+                    <FileCheck2 size={14} className="text-pqs-gold group-hover/btn:text-pqs-navy transition-colors" />
+                    <span>VIEW SPECIFICATION</span>
+                  </button>
+                  <Link
+                    href={`/standards/${cert.id}`}
+                    className="inline-flex items-center justify-center px-3 py-2.5 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-xs border border-white/15 transition-all"
+                    title={`View dedicated ${cert.name} scope page`}
+                  >
+                    <ArrowUpRight size={14} />
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Bottom Banner Call to Action */}
         <motion.div 
-          initial="hidden" 
-          whileInView="visible" 
-          viewport={{ once: true }} 
-          variants={fadeInUp}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="mt-16 rounded-3xl bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-pqs-gold/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-2xl"
         >
           <div className="max-w-2xl text-center md:text-left">
@@ -228,6 +179,13 @@ export default function AccreditationsSection() {
             </a>
           </div>
         </motion.div>
+
+        {/* Specification Modal for Selected Certification */}
+        <AuditSpecModal
+          isOpen={!!specModalId}
+          onClose={() => setSpecModalId(null)}
+          standardId={specModalId || "iso-17025"}
+        />
 
       </div>
     </section>

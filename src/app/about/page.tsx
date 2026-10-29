@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const appleEase: any = [0.16, 1, 0.3, 1];
-const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 1, ease: appleEase } } };
+const fadeInUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: appleEase } } };
 const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 
 const team = [
@@ -32,23 +32,23 @@ export default function About() {
   return (
     <div className="flex flex-col min-h-screen bg-[#fafafa]">
       
-      {/* HEADER */}
-      <section className="relative h-[55vh] min-h-[440px] flex items-end pb-20 pt-32 overflow-hidden bg-pqs-dark">
-        <div className="absolute inset-0 z-0 bg-[url('/unsplash_3.jpg')] bg-cover bg-center opacity-30 mix-blend-luminosity"></div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-pqs-dark via-pqs-dark/80 to-transparent"></div>
+      {/* HEADER / HERO BANNER */}
+      <section className="relative min-h-[500px] md:min-h-[560px] flex flex-col justify-center pt-44 md:pt-52 pb-24 overflow-hidden bg-pqs-dark">
+        <div className="absolute inset-0 z-0 bg-[url('/unsplash_3.jpg')] bg-cover bg-center opacity-35 mix-blend-luminosity scale-105 transition-transform duration-1000"></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-pqs-dark via-pqs-dark/85 to-pqs-dark/50"></div>
         
         <div className="container mx-auto px-4 lg:px-8 relative z-20">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl">
-            <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-4">
+            <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-5 pt-4">
               <div className="h-[2px] w-12 bg-pqs-gold"></div>
-              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs">
+              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
                 WHO WE ARE &bull; PRECISION QUALITY SERVICES
               </h2>
             </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-4">
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-5">
               Making Compliance Real.
             </motion.h1>
-            <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg max-w-2xl font-light">
+            <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg md:text-xl max-w-2xl font-light leading-relaxed">
               Bridging the gap between factory-floor operations and international certification standards.
             </motion.p>
           </motion.div>
@@ -104,16 +104,16 @@ export default function About() {
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={staggerContainer} className="lg:w-1/2">
               <div className="grid grid-cols-2 gap-4">
-                <motion.div variants={fadeInUp} className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-xl group">
+                <motion.div variants={fadeInUp} className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-xl group bg-gray-900">
                   <Image 
-                    src="/unsplash_0.jpg" 
-                    alt="Textile materials on factory floor" 
+                    src="/unsplash_1.jpg" 
+                    alt="Organic cotton fibers and raw textile materials" 
                     fill 
                     sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-1000" 
                   />
                 </motion.div>
-                <motion.div variants={fadeInUp} className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-xl translate-y-12 group">
+                <motion.div variants={fadeInUp} className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-xl translate-y-12 group bg-gray-900">
                   <Image 
                     src="/microscope.jpg" 
                     alt="Laboratory inspection and testing equipment" 
