@@ -39,13 +39,13 @@ export default function About() {
         
         <div className="container mx-auto px-4 lg:px-8 relative z-20">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl">
-            <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-5 pt-4">
-              <div className="h-[2px] w-12 bg-pqs-gold"></div>
-              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
-                WHO WE ARE &bull; PRECISION QUALITY SERVICES
+            <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-4 pt-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-pqs-gold"></span>
+              <h2 className="text-pqs-gold font-montserrat font-semibold tracking-wide text-xs md:text-sm">
+                Who We Are &bull; Precision Quality Services
               </h2>
             </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-5">
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white leading-tight tracking-tight mb-5">
               Making Compliance Real.
             </motion.h1>
             <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-lg md:text-xl max-w-2xl font-light leading-relaxed">
@@ -66,12 +66,12 @@ export default function About() {
           <div className="flex flex-col lg:flex-row gap-20 items-center">
             
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={staggerContainer} className="lg:w-1/2">
-              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pqs-navy/5 text-pqs-navy font-montserrat font-bold text-xs uppercase tracking-wider mb-6">
+              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-pqs-navy/5 text-pqs-navy font-montserrat font-semibold text-xs tracking-wide mb-6">
                 <Award size={15} className="text-pqs-gold" />
                 <span>Our Philosophy</span>
               </motion.div>
 
-              <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-montserrat font-black text-pqs-navy mb-8 leading-tight">
+              <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-montserrat font-bold text-pqs-navy mb-8 leading-tight">
                 Rooted in the real challenges of the factory floor.
               </motion.h2>
 

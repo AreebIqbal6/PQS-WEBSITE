@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X, Search, ArrowRight, ArrowUpRight, ShieldCheck, Check } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,10 +9,20 @@ import { STANDARDS_CATALOG } from '@/data/standards';
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+    import('@/lib/liquid-glass').catch((err) => {
+      console.error('Failed to load liquid-glass:', err);
+    });
+  }, []);
 
   const handleOurServicesClick = (e: React.MouseEvent) => {
     if (typeof window !== 'undefined' && window.location.pathname === '/services') {
@@ -32,6 +42,24 @@ export default function Header() {
       }
     }
   };
+
+  const NAV_ITEMS = [
+    { id: 'home', label: 'Home', href: '/' },
+    { id: 'services', label: 'Our Services', href: '/services', onClick: handleOurServicesClick },
+    { id: 'audits', label: 'Audits', href: '/audits' },
+    { id: 'about', label: 'About Us', href: '/about' },
+    { id: 'contact', label: 'Contact', href: '/contact' },
+  ];
+
+  const getActiveTab = () => {
+    if (pathname === '/') return 'home';
+    if (pathname?.startsWith('/services')) return 'services';
+    if (pathname?.startsWith('/audits')) return 'audits';
+    if (pathname?.startsWith('/about')) return 'about';
+    if (pathname?.startsWith('/contact')) return 'contact';
+    return '';
+  };
+  const activeNavId = getActiveTab();
 
   useEffect(() => {
     let lastScrolled = window.scrollY > 20;
@@ -93,53 +121,122 @@ export default function Header() {
         (isScrolled || mobileMenuOpen) ? 'py-2.5 sm:py-3' : 'py-5 sm:py-6'
       }`}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
+          <div className={`relative flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
             (isScrolled || mobileMenuOpen)
-              ? 'bg-[#0A1E35]/50 backdrop-blur-2xl saturate-180 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.3)] px-6 py-2.5 text-white' 
+              ? 'border border-white/20 shadow-none px-6 py-2 text-white' 
               : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
           }`}>
+            {/* Ray-traced Liquid Glass Background Layer (Stationary light refraction, no mouse tracking, no shadows) */}
+            <div 
+              aria-hidden="true"
+              className={`absolute inset-0 rounded-full overflow-hidden pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                (isScrolled || mobileMenuOpen) ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
+              }`}
+            >
+              {/* Frosted optical layer with color preservation */}
+              <div className="absolute inset-0 bg-[#0A1E35]/65 backdrop-blur-xl" />
+
+              {isMounted && (
+                <liquid-glass
+                  no-pointer=""
+                  colors="#0A1E35 #0c2b4d #c8a951 #071524"
+                  dim="0.1"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    minHeight: 0,
+                    display: 'block',
+                    background: 'transparent',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <div
+                    glass=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '999px',
+                      '--glass-tint': 'rgba(10, 30, 53, 0.55)',
+                      '--glass-depth': '1.15',
+                      '--glass-dome': '1.3',
+                      '--glass-chroma': '0.012',
+                      '--glass-frost': '0.32',
+                    } as React.CSSProperties}
+                  />
+                </liquid-glass>
+              )}
+            </div>
+
             {/* Logo */}
-            <Link href="/" className="flex items-center group relative z-50" title="PQS - Precision Quality Services">
+            <Link href="/" className="flex items-center group relative z-10" title="PQS - Precision Quality Services">
               <Image 
-                src="/logo_transparent_v2.png" 
-                alt="PQS Logo" 
+                src="/banner_wordmark_white.png" 
+                alt="Precision Quality Services" 
                 width={220} 
-                height={40} 
+                height={24} 
                 priority
-                className={`object-contain transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
-                  (isScrolled || mobileMenuOpen) ? 'w-[140px] md:w-[160px]' : 'w-[160px] md:w-[210px]'
+                className={`object-contain transition-all duration-300 group-hover:opacity-90 ${
+                  (isScrolled || mobileMenuOpen) ? 'w-[140px] md:w-[165px]' : 'w-[160px] md:w-[210px]'
                 } h-auto`}
               />
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-montserrat font-bold text-xs tracking-wider text-white">
-              <Link href="/" className="hover:text-pqs-gold transition-colors duration-200">
-                HOME
-              </Link>
-              <Link 
-                href="/services" 
-                onClick={handleOurServicesClick}
-                className="hover:text-pqs-gold transition-colors duration-200 py-2"
-              >
-                OUR SERVICES
-              </Link>
-              <Link 
-                href="/audits" 
-                className="hover:text-pqs-gold transition-colors duration-200 py-2"
-              >
-                AUDITS
-              </Link>
-              <Link href="/about" className="hover:text-pqs-gold transition-colors duration-200">
-                ABOUT US
-              </Link>
-              <Link href="/contact" className="hover:text-pqs-gold transition-colors duration-200">
-                CONTACT
-              </Link>
+            {/* Desktop Nav with Spring Bouncing Tab Switcher */}
+            <nav 
+              onMouseLeave={() => setHoveredNav(null)}
+              className="relative z-10 hidden lg:flex items-center gap-1 p-1 rounded-full font-montserrat font-medium text-xs tracking-wider"
+            >
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeNavId === item.id;
+                const isHovered = hoveredNav === item.id;
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    onClick={item.onClick}
+                    onMouseEnter={() => setHoveredNav(item.id)}
+                    className="relative px-3.5 py-1.5 rounded-full transition-colors duration-200 select-none"
+                  >
+                    {/* Bouncing hover indicator */}
+                    {isHovered && !isActive && (
+                      <motion.span
+                        layoutId="navHoverPill"
+                        transition={{ type: "spring", stiffness: 450, damping: 28, bounce: 0.2 }}
+                        className="absolute inset-0 rounded-full bg-white/10 pointer-events-none"
+                      />
+                    )}
+
+                    {/* Spring bouncing active tab indicator */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="navActiveTabIndicator"
+                        transition={{ 
+                          type: "spring", 
+                          stiffness: 420, 
+                          damping: 24, 
+                          bounce: 0.32 
+                        }}
+                        className="absolute inset-0 rounded-full bg-white/15 border border-white/20 pointer-events-none"
+                      />
+                    )}
+
+                    <motion.span 
+                      whileTap={{ scale: 0.92 }}
+                      className={`relative z-10 transition-colors duration-200 block ${
+                        isActive ? 'text-pqs-gold font-semibold' : 'text-white/90 hover:text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </motion.span>
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Right Actions */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="relative z-10 hidden lg:flex items-center gap-5">
               {/* Interactive Search Icon */}
               <button 
                 type="button"
@@ -153,14 +250,14 @@ export default function Header() {
 
               <Link 
                 href="/contact" 
-                className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-semibold text-xs tracking-wide px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow hover:-translate-y-0.5"
               >
-                GET A QUOTE
+                Get a Quote
               </Link>
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="relative z-10 flex items-center gap-2 lg:hidden">
               <button 
                 type="button"
                 onClick={() => setSearchOpen(true)}
@@ -191,13 +288,13 @@ export default function Header() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="lg:hidden container mx-auto px-4 mt-3"
             >
-              <div className="bg-[#0A1E35]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 flex flex-col gap-5 text-white font-montserrat font-bold text-sm tracking-wider shadow-2xl">
+              <div className="bg-[#0A1E35]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 flex flex-col gap-5 text-white font-montserrat font-medium text-sm tracking-wide shadow-2xl">
                 <Link 
                   href="/" 
                   onClick={() => setMobileMenuOpen(false)}
                   className="hover:text-pqs-gold transition-colors py-1"
                 >
-                  HOME
+                  Home
                 </Link>
                 
                 <Link 
@@ -208,14 +305,14 @@ export default function Header() {
                   }}
                   className="hover:text-pqs-gold transition-colors py-1"
                 >
-                  OUR SERVICES
+                  Our Services
                 </Link>
                 <Link 
                   href="/audits" 
                   onClick={() => setMobileMenuOpen(false)}
                   className="hover:text-pqs-gold transition-colors py-1"
                 >
-                  AUDITS
+                  Audits
                 </Link>
 
                 <Link 
@@ -223,7 +320,7 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="hover:text-pqs-gold transition-colors py-1"
                 >
-                  ABOUT US
+                  About Us
                 </Link>
 
                 <Link 
@@ -231,15 +328,15 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="hover:text-pqs-gold transition-colors py-1"
                 >
-                  CONTACT
+                  Contact
                 </Link>
 
                 <Link 
                   href="/contact" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-wider px-6 py-3 rounded-full text-center transition-all duration-300 shadow-md mt-2"
+                  className="bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-semibold text-xs tracking-wide px-6 py-3 rounded-full text-center transition-all duration-300 shadow-sm mt-2"
                 >
-                  GET A QUOTE
+                  Get a Quote
                 </Link>
               </div>
             </motion.div>

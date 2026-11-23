@@ -44,6 +44,12 @@ body {
   transform: translateZ(0);
 }
 
+liquid-glass {
+  display: block;
+  min-height: 0 !important;
+  background: transparent !important;
+}
+
 .liquid-glass-dark {
   background: rgba(15, 25, 45, 0.45);
   backdrop-filter: blur(16px) saturate(160%);

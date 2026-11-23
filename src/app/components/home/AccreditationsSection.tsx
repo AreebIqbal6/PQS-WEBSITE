@@ -13,25 +13,21 @@ export default function AccreditationsSection() {
   const [specModalId, setSpecModalId] = useState<string | null>(null);
 
   return (
-    <section id="accreditations" className="py-28 relative z-20 bg-pqs-dark noise-bg border-t border-b border-pqs-gold/20 overflow-hidden">
-      {/* Background Ambient Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-pqs-gold/10 rounded-full blur-[140px] pointer-events-none mix-blend-screen" />
-      <div className="absolute -bottom-20 right-0 w-[600px] h-[600px] bg-[#0A1E35]/80 rounded-full blur-[120px] pointer-events-none" />
-
+    <section id="accreditations" className="py-24 relative z-20 bg-pqs-dark border-t border-b border-white/10 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-20">
+        <div className="text-center max-w-4xl mx-auto mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-pqs-gold/30 backdrop-blur-md mb-6"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6"
           >
-            <ShieldCheck size={16} className="text-pqs-gold" />
-            <span className="text-pqs-gold font-montserrat font-bold text-xs tracking-[0.25em] uppercase">
-              ACCREDITED COMPLIANCE FRAMEWORKS &bull; GLOBAL STANDARDS
+            <ShieldCheck size={15} className="text-pqs-gold" />
+            <span className="text-pqs-gold font-montserrat font-semibold text-xs tracking-wide">
+              Accredited Frameworks &bull; Global Standards
             </span>
           </motion.div>
 
@@ -39,11 +35,11 @@ export default function AccreditationsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-black text-white leading-tight tracking-tight mb-6"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold text-white leading-tight tracking-tight mb-6"
           >
             Making Compliance Real Across <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pqs-gold via-[#e8d28a] to-white italic font-normal">
+            <span className="text-[#e8d28a] font-normal">
               8 International Standards
             </span>
           </motion.h2>
@@ -52,8 +48,8 @@ export default function AccreditationsSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-300 font-lato text-lg md:text-xl font-light leading-relaxed"
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-gray-300 font-lato text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto"
           >
             Precision Quality Services (PQS) bridges factory floor execution with rigorous international accreditation. We prepare, audit, test, and certify your operations for premier global buyers.
           </motion.p>
@@ -67,18 +63,15 @@ export default function AccreditationsSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-pqs-gold/50 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(200,169,81,0.15)]"
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              whileHover={{ y: -4 }}
+              className="group relative rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-pqs-gold/40 p-6 flex flex-col justify-between transition-all duration-200 hover:shadow-xl"
             >
-              {/* Top Accent Gradient on Hover */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pqs-gold/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl" />
-
               <div>
                 {/* Badge Card Wrapper */}
                 <Link 
                   href={`/standards/${cert.id}`}
-                  className="block bg-[#FFFFFF] rounded-xl p-3 mb-6 shadow-md border border-gray-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+                  className="block bg-[#FFFFFF] rounded-xl p-3 mb-6 shadow-sm border border-gray-100 flex items-center justify-center transition-colors"
                   title={`View ${cert.name} certification specification`}
                 >
                   <div className="relative w-full h-24">
@@ -94,11 +87,11 @@ export default function AccreditationsSection() {
 
                 {/* Title & Tagline */}
                 <Link href={`/standards/${cert.id}`} className="block group/link">
-                  <h3 className="text-xl font-montserrat font-bold text-white group-hover:text-pqs-gold transition-colors mb-1 flex items-center justify-between">
+                  <h3 className="text-lg font-montserrat font-bold text-white group-hover:text-pqs-gold transition-colors mb-1 flex items-center justify-between">
                     <span>{cert.name}</span>
-                    <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 text-pqs-gold transition-all" />
+                    <ArrowUpRight size={15} className="opacity-0 group-hover:opacity-100 text-pqs-gold transition-opacity" />
                   </h3>
-                  <div className="text-pqs-gold font-lato text-xs font-semibold tracking-wider uppercase mb-3">
+                  <div className="text-pqs-gold/90 font-lato text-xs font-semibold tracking-wide mb-3">
                     {cert.tagline}
                   </div>
                 </Link>
@@ -125,14 +118,14 @@ export default function AccreditationsSection() {
                   <button
                     type="button"
                     onClick={() => setSpecModalId(cert.id)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2.5 sm:px-3 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-[11px] sm:text-xs tracking-wide border border-white/15 transition-all cursor-pointer active:scale-[0.98] group/btn whitespace-nowrap"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-semibold text-xs border border-white/10 transition-colors cursor-pointer active:scale-[0.98] group/btn whitespace-nowrap"
                   >
                     <FileCheck2 size={14} className="text-pqs-gold group-hover/btn:text-pqs-navy transition-colors" />
-                    <span>VIEW SPECIFICATION</span>
+                    <span>View Specification</span>
                   </button>
                   <Link
                     href={`/standards/${cert.id}`}
-                    className="inline-flex items-center justify-center px-3 py-2.5 rounded-xl bg-white/10 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-xs border border-white/15 transition-all"
+                    className="inline-flex items-center justify-center px-3 py-2.5 rounded-xl bg-white/5 hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-semibold text-xs border border-white/10 transition-colors"
                     title={`View dedicated ${cert.name} scope page`}
                   >
                     <ArrowUpRight size={14} />
@@ -144,15 +137,16 @@ export default function AccreditationsSection() {
         </div>
 
         {/* Bottom Banner Call to Action */}
+        {/* Facility CTA Banner */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 rounded-3xl bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-pqs-gold/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-2xl"
+          transition={{ duration: 0.5 }}
+          className="mt-16 rounded-2xl bg-white/[0.04] border border-white/10 p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-xl"
         >
           <div className="max-w-2xl text-center md:text-left">
-            <h4 className="text-2xl md:text-3xl font-montserrat font-black text-white mb-2">
+            <h4 className="text-2xl md:text-3xl font-montserrat font-bold text-white mb-2">
               Need Verification or Audit Preparation for Your Facility?
             </h4>
             <p className="text-gray-300 font-lato text-base font-light">
@@ -163,10 +157,10 @@ export default function AccreditationsSection() {
           <div className="flex flex-col sm:flex-row gap-4 shrink-0">
             <Link 
               href="/contact" 
-              className="inline-flex items-center justify-center gap-3 bg-pqs-gold text-pqs-navy font-montserrat font-bold text-xs tracking-widest px-8 py-4 rounded-full transition-all duration-300 hover:bg-white shadow-[0_0_30px_rgba(200,169,81,0.3)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 bg-pqs-gold text-pqs-navy font-montserrat font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:bg-white shadow-sm hover:shadow hover:-translate-y-0.5"
             >
-              <span>SCHEDULE AN AUDIT</span>
-              <ArrowRight size={15} />
+              <span>Schedule an Audit</span>
+              <ArrowRight size={16} />
             </Link>
           </div>
         </motion.div>

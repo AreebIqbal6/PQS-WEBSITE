@@ -19,20 +19,10 @@ export default function HeroSection() {
           fill 
           priority 
           sizes="100vw" 
-          className="object-cover opacity-30 mix-blend-luminosity scale-105"
+          className="object-cover opacity-25 mix-blend-luminosity scale-105"
         />
       </div>
       <div className="absolute inset-0 z-10 hero-overlay"></div>
-      
-      {/* Hardware-Accelerated CSS Geometric Circles */}
-      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full border border-pqs-gold/15 opacity-50 animate-spin-slow pointer-events-none"
-        />
-        <div 
-          className="absolute bottom-[-30%] left-[-15%] w-[1000px] h-[1000px] rounded-full border border-white/5 opacity-50 animate-spin-slow-reverse pointer-events-none"
-        />
-      </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-20 my-auto">
@@ -47,35 +37,29 @@ export default function HeroSection() {
           <motion.div variants={fadeInUp}>
             <Link 
               href="/about" 
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-pqs-gold/30 hover:border-pqs-gold/60 backdrop-blur-md mb-8 transition-all group"
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-pqs-gold/40 backdrop-blur-md mb-8 transition-colors group"
               title="Learn more about PQS"
             >
-              <div className="h-[2px] w-8 bg-pqs-gold"></div>
-              <h2 className="font-montserrat font-bold tracking-[0.2em] text-xs md:text-sm italic text-white group-hover:text-pqs-gold transition-colors">
+              <span className="w-1.5 h-1.5 rounded-full bg-pqs-gold"></span>
+              <h2 className="font-montserrat font-medium tracking-wide text-xs md:text-sm text-gray-200 group-hover:text-pqs-gold transition-colors">
                 Making Compliance Real
               </h2>
-              <div className="h-[2px] w-8 bg-pqs-gold"></div>
             </Link>
           </motion.div>
 
           {/* Main Headline */}
           <motion.h1 
             variants={fadeInUp} 
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-montserrat font-black text-white leading-[1.08] tracking-tight mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-montserrat font-bold text-white leading-[1.08] tracking-tight mb-8"
           >
             Laboratory Testing &amp; <br />
-            <motion.span 
-              initial={{ opacity: 0, filter: "blur(8px)" }} 
-              animate={{ opacity: 1, filter: "blur(0px)" }} 
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-pqs-gold via-[#e8d28a] to-white italic font-light inline-block"
-            >
+            <span className="text-[#e8d28a] font-normal inline-block">
               Certified Compliance
-            </motion.span>
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
-          <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-base sm:text-lg md:text-2xl max-w-3xl mb-10 font-light leading-relaxed">
+          <motion.p variants={fadeInUp} className="text-gray-300 font-lato text-base sm:text-lg md:text-xl max-w-3xl mb-10 font-light leading-relaxed">
             Accredited <strong className="text-white font-medium">ISO 17025</strong> testing protocols, sustainability certifications (<strong className="text-white font-medium">GOTS, GRS, ZDHC, PPWR, EN 15343</strong>), and factory-floor quality management tailored for international supply chains.
           </motion.p>
 
@@ -83,18 +67,18 @@ export default function HeroSection() {
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <Link 
               href="/contact" 
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-bold text-xs tracking-widest px-8 py-4 rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(200,169,81,0.3)] hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-pqs-gold hover:bg-white text-pqs-navy font-montserrat font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow hover:-translate-y-0.5"
             >
-              <span>SCHEDULE AN AUDIT</span>
-              <ArrowRight size={15} />
+              <span>Schedule an Audit</span>
+              <ArrowRight size={16} />
             </Link>
 
             <Link 
               href="/#accreditations" 
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs tracking-widest px-7 py-4 rounded-full border border-white/20 transition-all duration-300"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white/5 hover:bg-white/10 text-white font-montserrat font-semibold text-sm px-7 py-3.5 rounded-xl border border-white/15 hover:border-white/30 transition-all duration-200"
             >
               <ShieldCheck size={16} className="text-pqs-gold" />
-              <span>EXPLORE STANDARDS</span>
+              <span>Explore Standards</span>
             </Link>
           </motion.div>
 

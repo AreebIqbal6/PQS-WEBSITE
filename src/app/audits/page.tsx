@@ -41,12 +41,12 @@ export default function Audits() {
           <div className="flex flex-col lg:flex-row gap-20 items-center">
             
             <div className="lg:w-1/2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pqs-navy/5 text-pqs-navy font-montserrat font-bold text-xs uppercase tracking-wider mb-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-pqs-navy/5 text-pqs-navy font-montserrat font-semibold text-xs tracking-wide mb-6">
                 <ShieldCheck size={15} className="text-pqs-gold" />
                 <span>Auditing Expertise</span>
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-montserrat font-black text-pqs-navy mb-8 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-montserrat font-bold text-pqs-navy mb-8 leading-tight">
                 Comprehensive evaluation for international buyer compliance.
               </h2>
               <p className="text-gray-600 font-lato text-lg leading-relaxed mb-6 font-light">

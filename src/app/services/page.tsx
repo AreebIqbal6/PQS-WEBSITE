@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, BookOpen, Layers, FlaskConical, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type ServiceCategory = 'all' | 'training' | 'consultancy' | 'testing';
 
@@ -217,14 +218,14 @@ export default function Services() {
         <div className="container mx-auto px-4 lg:px-8 relative z-20">
           <div className="max-w-4xl">
             {/* Tagline / Subtitle with generous spacing */}
-            <div className="flex items-center gap-4 mb-5 pt-6">
-              <div className="h-[2px] w-12 bg-pqs-gold"></div>
-              <h2 className="text-pqs-gold font-montserrat font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
-                WHAT WE DO &bull; MAKING COMPLIANCE REAL
+            <div className="flex items-center gap-3 mb-4 pt-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-pqs-gold"></span>
+              <h2 className="text-pqs-gold font-montserrat font-semibold tracking-wide text-xs md:text-sm">
+                What We Do &bull; Making Compliance Real
               </h2>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-black text-white leading-tight tracking-tight mb-5">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white leading-tight tracking-tight mb-5">
               Our Services
             </h1>
             
@@ -256,26 +257,44 @@ export default function Services() {
 
           {/* STICKY SERVICE TABS BAR */}
           <div className="sticky top-[68px] md:top-[76px] z-30 py-2 mb-12 md:mb-16 -mx-4 px-4 bg-[#fafafa]/90 backdrop-blur-xl border-b border-gray-200/60 shadow-xs flex justify-center">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 p-1.5 sm:p-2 rounded-2xl md:rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300 shadow-inner max-w-4xl">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl md:rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300 shadow-inner max-w-4xl">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
                 return (
-                  <button
+                  <motion.button
                     key={tab.id}
                     onClick={() => handleTabClick(tab.id)}
-                    className={`relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl md:rounded-full font-montserrat font-bold text-xs tracking-wider transition-all duration-200 cursor-pointer ${
+                    whileTap={{ scale: 0.93 }}
+                    whileHover={{ scale: 1.02 }}
+                    className={`relative flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl md:rounded-full font-montserrat font-bold text-xs tracking-wider transition-colors duration-200 cursor-pointer select-none ${
                       isActive
-                        ? 'bg-pqs-navy text-pqs-gold shadow-md shadow-pqs-navy/30'
-                        : 'text-gray-700 hover:text-pqs-navy hover:bg-white'
+                        ? 'text-pqs-gold'
+                        : 'text-gray-700 hover:text-pqs-navy'
                     }`}
                   >
-                    <Icon size={14} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
-                    <span className="whitespace-nowrap">{tab.label}</span>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono shrink-0 ${isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'}`}>
-                      {tab.count}
+                    {isActive && (
+                      <motion.div
+                        layoutId="servicesActiveTabIndicator"
+                        transition={{ 
+                          type: "spring", 
+                          stiffness: 420, 
+                          damping: 24, 
+                          bounce: 0.32 
+                        }}
+                        className="absolute inset-0 bg-pqs-navy rounded-xl md:rounded-full border border-pqs-gold/30"
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
+                      <Icon size={14} className={isActive ? 'text-pqs-gold' : 'text-gray-500'} />
+                      <span className="whitespace-nowrap">{tab.label}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono shrink-0 transition-colors ${
+                        isActive ? 'bg-pqs-gold/20 text-pqs-gold' : 'bg-gray-300 text-gray-700'
+                      }`}>
+                        {tab.count}
+                      </span>
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -283,69 +302,80 @@ export default function Services() {
 
           {/* DYNAMIC SERVICES LIST */}
           <div id="services-list" className="flex flex-col gap-24 transition-opacity duration-300 pb-20">
-            {filteredServices.map((service, index) => {
-              const isFirstConsultancy = service.category === 'consultancy' && (index === 0 || filteredServices[index - 1]?.category !== 'consultancy');
-              const domId = isFirstConsultancy ? 'consultancy' : service.id;
-              return (
-                <div 
-                  key={service.id} 
-                  id={domId}
-                  className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center scroll-mt-40`}
-                >
-                  {isFirstConsultancy && <span id="consultancy-zdhc" className="sr-only" />}
-                
-                {/* Service Image (100% Unique & Relatable) */}
-                <div className="w-full md:w-1/2">
-                  <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl group border border-gray-100 bg-gray-900">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 16, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.99 }}
+                transition={{ type: "spring", stiffness: 380, damping: 26, bounce: 0.2 }}
+                className="flex flex-col gap-24"
+              >
+                {filteredServices.map((service, index) => {
+                  const isFirstConsultancy = service.category === 'consultancy' && (index === 0 || filteredServices[index - 1]?.category !== 'consultancy');
+                  const domId = isFirstConsultancy ? 'consultancy' : service.id;
+                  return (
                     <div 
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${service.img}')` }}
-                    />
-                    <div className="absolute inset-0 bg-pqs-navy/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                  </div>
-                </div>
-
-                {/* Service Details */}
-                <div className="w-full md:w-1/2 md:px-8">
-                  <div className="text-pqs-gold font-montserrat font-black text-6xl md:text-8xl opacity-20 mb-[-2rem] ml-[-1rem]">
-                    0{index + 1}
-                  </div>
-                  
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pqs-navy/5 text-pqs-navy text-xs font-montserrat font-bold uppercase tracking-wider mb-3">
-                    <ShieldCheck size={14} className="text-pqs-gold" />
-                    <span>{service.badge}</span>
-                  </div>
-
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-montserrat font-black text-pqs-navy mb-4 leading-snug">
-                    {service.title}
-                  </h2>
-                  
-                  <p className="text-gray-600 font-lato text-base md:text-lg leading-relaxed mb-6 font-light">
-                    {service.desc}
-                  </p>
-
-                  <ul className="flex flex-col gap-3 mb-8">
-                    {service.deliverables.map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-pqs-navy font-medium font-lato text-sm md:text-base">
-                        <CheckCircle2 size={18} className="text-pqs-gold shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap items-center gap-4">
-                    <Link 
-                      href="/contact" 
-                      className="inline-flex items-center gap-3 text-xs md:text-sm font-bold font-montserrat tracking-widest text-white bg-pqs-navy px-6 py-3.5 rounded-full hover:bg-pqs-gold hover:text-pqs-navy transition-all shadow-md group"
+                      key={service.id} 
+                      id={domId}
+                      className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center scroll-mt-40`}
                     >
-                      <span>REQUEST QUOTATION</span>
-                      <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                      {isFirstConsultancy && <span id="consultancy-zdhc" className="sr-only" />}
+                    
+                    {/* Service Image (100% Unique & Relatable) */}
+                    <div className="w-full md:w-1/2">
+                      <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl group border border-gray-100 bg-gray-900">
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+                          style={{ backgroundImage: `url('${service.img}')` }}
+                        />
+                        <div className="absolute inset-0 bg-pqs-navy/15 group-hover:bg-transparent transition-colors duration-500"></div>
+                      </div>
+                    </div>
+
+                    {/* Service Details */}
+                    <div className="w-full md:w-1/2 md:px-8">
+                      <div className="text-pqs-gold font-montserrat font-black text-6xl md:text-8xl opacity-20 mb-[-2rem] ml-[-1rem]">
+                        0{index + 1}
+                      </div>
+                      
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-pqs-navy/5 text-pqs-navy text-xs font-montserrat font-semibold tracking-wide mb-3">
+                        <ShieldCheck size={14} className="text-pqs-gold" />
+                        <span>{service.badge}</span>
+                      </div>
+
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-montserrat font-bold text-pqs-navy mb-4 leading-snug">
+                        {service.title}
+                      </h2>
+                      
+                      <p className="text-gray-600 font-lato text-base md:text-lg leading-relaxed mb-6 font-light">
+                        {service.desc}
+                      </p>
+
+                      <ul className="flex flex-col gap-3 mb-8">
+                        {service.deliverables.map((item, i) => (
+                          <li key={i} className="flex items-center gap-3 text-pqs-navy font-medium font-lato text-sm md:text-base">
+                            <CheckCircle2 size={18} className="text-pqs-gold shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-wrap items-center gap-4">
+                        <Link 
+                          href="/contact" 
+                          className="inline-flex items-center gap-3 text-xs md:text-sm font-bold font-montserrat tracking-widest text-white bg-pqs-navy px-6 py-3.5 rounded-full hover:bg-pqs-gold hover:text-pqs-navy transition-all shadow-md group"
+                        >
+                          <span>REQUEST QUOTATION</span>
+                          <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         </div>

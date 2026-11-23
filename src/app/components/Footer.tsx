@@ -19,28 +19,28 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block mb-4 group" title="Precision Quality Services - Home">
               <Image 
-                src="/logo_transparent_v2.png" 
-                alt="PQS Logo" 
-                width={220} 
-                height={40} 
-                className="h-auto transition-transform duration-300 group-hover:scale-105" 
+                src="/banner_wordmark_white.png" 
+                alt="Precision Quality Services" 
+                width={210} 
+                height={24} 
+                className="h-auto w-[180px] object-contain transition-opacity duration-200 group-hover:opacity-90" 
               />
             </Link>
             <Link 
               href="/about" 
-              className="text-pqs-gold hover:text-white font-montserrat italic font-medium text-sm tracking-wider mb-6 block transition-colors"
+              className="text-pqs-gold hover:text-white font-montserrat font-medium text-xs tracking-wide mb-6 block transition-colors"
             >
               Making Compliance Real &rarr;
             </Link>
             <p className="text-gray-400 font-lato leading-relaxed text-sm font-light mb-6">
               Precision Quality Services (PQS) delivers accredited laboratory testing coordination, ISO management certifications, sustainability audits, and factory floor quality systems.
             </p>
-            <div className="pt-2">
+            <div className="pt-1">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-pqs-gold hover:text-pqs-navy text-pqs-gold text-xs font-montserrat font-bold tracking-wider border border-pqs-gold/30 transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-pqs-gold hover:text-pqs-navy text-pqs-gold text-xs font-montserrat font-semibold tracking-wide border border-pqs-gold/30 transition-colors"
               >
-                <span>REQUEST CONSULTATION</span>
+                <span>Request Consultation</span>
                 <ArrowUpRight size={13} />
               </Link>
             </div>

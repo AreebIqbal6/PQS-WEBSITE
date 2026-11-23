@@ -23,25 +23,25 @@ export default function SplitInfoSection() {
             className="lg:w-1/2"
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
           >
-            <motion.h4 variants={fadeInUp} className="text-pqs-gold font-montserrat font-bold tracking-[0.2em] uppercase mb-4 text-sm">THE PQS DIFFERENCE</motion.h4>
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-6xl font-montserrat font-black text-pqs-navy mb-8 tracking-tight leading-[1.1]">
+            <motion.h4 variants={fadeInUp} className="text-pqs-gold font-montserrat font-semibold tracking-wide text-xs md:text-sm uppercase mb-3">The PQS Difference</motion.h4>
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold text-pqs-navy mb-6 tracking-tight leading-[1.12]">
               Real solutions for the factory floor.
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-gray-600 font-lato text-xl mb-10 leading-relaxed font-light">
+            <motion.p variants={fadeInUp} className="text-gray-600 font-lato text-lg md:text-xl mb-8 leading-relaxed font-light">
               We avoid boardroom theory. Our experts dive into the machines, the materials, and the metrics. We identify root causes and implement changes that stick.
             </motion.p>
-            <motion.div variants={staggerContainer} className="flex flex-col gap-4 mb-8">
+            <motion.div variants={staggerContainer} className="flex flex-col gap-3.5 mb-8">
               {[
                 { title: "Improved product quality and consistent output", link: "/standards/iso-17025" },
                 { title: "Reduction in defects and rework cycles", link: "/services#training" },
                 { title: "Better process control across all stages", link: "/services#consultancy" }
               ].map((item, i) => (
                 <Link key={i} href={item.link}>
-                  <motion.div variants={fadeInUp} whileHover={{ x: 6 }} className="flex items-center gap-5 p-4 rounded-2xl bg-white shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-gray-100 hover:border-pqs-gold/40 hover:shadow-md transition-all duration-300 group cursor-pointer">
-                    <div className="w-12 h-12 rounded-full bg-pqs-navy/5 group-hover:bg-pqs-gold/20 flex items-center justify-center shrink-0 transition-colors">
-                      <CheckCircle className="text-pqs-gold" size={24} />
+                  <motion.div variants={fadeInUp} whileHover={{ x: 4 }} className="flex items-center gap-4 p-4 rounded-xl bg-white shadow-sm border border-gray-100 hover:border-pqs-gold/40 hover:shadow transition-all duration-200 group cursor-pointer">
+                    <div className="w-10 h-10 rounded-lg bg-pqs-navy/5 group-hover:bg-pqs-gold/20 flex items-center justify-center shrink-0 transition-colors">
+                      <CheckCircle className="text-pqs-gold" size={20} />
                     </div>
-                    <span className="font-montserrat font-semibold text-pqs-navy group-hover:text-pqs-gold transition-colors text-sm md:text-base">{item.title}</span>
+                    <span className="font-montserrat font-medium text-pqs-navy group-hover:text-pqs-gold transition-colors text-sm md:text-base">{item.title}</span>
                   </motion.div>
                 </Link>
               ))}
@@ -51,10 +51,10 @@ export default function SplitInfoSection() {
             <motion.div variants={fadeInUp}>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 bg-pqs-navy hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-bold text-xs tracking-widest px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 bg-pqs-navy hover:bg-pqs-gold hover:text-pqs-navy text-white font-montserrat font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow hover:-translate-y-0.5"
               >
-                <span>CONSULT WITH OUR EXPERTS</span>
-                <ArrowRight size={15} />
+                <span>Consult with Our Experts</span>
+                <ArrowRight size={16} />
               </Link>
             </motion.div>
           </motion.div>
@@ -64,26 +64,26 @@ export default function SplitInfoSection() {
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
           >
             {/* Visual Box with Optimized Next Image */}
-            <div className="relative w-full aspect-square rounded-[3rem] bg-gray-200 overflow-hidden shadow-2xl group">
+            <div className="relative w-full aspect-square rounded-2xl bg-gray-100 overflow-hidden shadow-xl group border border-gray-100">
                <Image 
                  src="/inspector.jpg" 
                  alt="PQS Technical Quality Inspection" 
                  fill 
                  sizes="(max-width: 1024px) 100vw, 50vw" 
-                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" 
+                 className="object-cover" 
                />
-               <div className="absolute inset-0 bg-pqs-navy/20 mix-blend-overlay"></div>
+               <div className="absolute inset-0 bg-pqs-navy/15 mix-blend-overlay"></div>
                
-               {/* Floating Glass Stats - GPU Hardware Accelerated */}
-               <div className="absolute bottom-8 left-8 right-8 bg-white/40 backdrop-blur-md border border-white/50 shadow-xl rounded-2xl p-6 flex justify-between items-center animate-float-subtle">
+               {/* Anchored Stats Card */}
+               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl border border-white/70 shadow-lg rounded-xl p-5 flex justify-between items-center">
                   <div>
-                    <div className="text-pqs-navy font-black text-4xl font-montserrat">100%</div>
-                    <div className="text-gray-800 font-lato font-bold text-sm uppercase tracking-widest">Quality Focus</div>
+                    <div className="text-pqs-navy font-bold text-3xl font-montserrat tracking-tight">100%</div>
+                    <div className="text-gray-700 font-lato font-medium text-xs tracking-wide">Quality Focus</div>
                   </div>
-                  <div className="w-[1px] h-12 bg-gray-400/60"></div>
+                  <div className="w-[1px] h-10 bg-gray-200"></div>
                   <div>
-                    <div className="text-pqs-navy font-black text-4xl font-montserrat">360°</div>
-                    <div className="text-gray-800 font-lato font-bold text-sm uppercase tracking-widest">Process Mapping</div>
+                    <div className="text-pqs-navy font-bold text-3xl font-montserrat tracking-tight">360°</div>
+                    <div className="text-gray-700 font-lato font-medium text-xs tracking-wide">Process Mapping</div>
                   </div>
                </div>
             </div>
