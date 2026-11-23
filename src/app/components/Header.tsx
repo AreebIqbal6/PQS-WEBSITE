@@ -19,7 +19,7 @@ export default function Header() {
 
   useEffect(() => {
     setIsMounted(true);
-    import('@/lib/liquid-glass').catch((err) => {
+    import('@zerowing/liquid-glass').catch((err) => {
       console.error('Failed to load liquid-glass:', err);
     });
   }, []);
