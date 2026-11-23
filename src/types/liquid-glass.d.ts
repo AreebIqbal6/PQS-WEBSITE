@@ -6,6 +6,7 @@ declare global {
       'liquid-glass': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           backdrop?: string;
+          renderer?: string;
           dim?: string | number;
           colors?: string;
           'inner-light'?: boolean | string;
@@ -23,6 +24,7 @@ declare global {
         'liquid-glass': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             backdrop?: string;
+            renderer?: string;
             dim?: string | number;
             colors?: string;
             'inner-light'?: boolean | string;

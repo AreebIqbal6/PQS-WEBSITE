@@ -121,55 +121,20 @@ export default function Header() {
         (isScrolled || mobileMenuOpen) ? 'py-2.5 sm:py-3' : 'py-5 sm:py-6'
       }`}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`relative flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
-            (isScrolled || mobileMenuOpen)
-              ? 'border border-white/20 shadow-none px-6 py-2 text-white' 
-              : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
-          }`}>
-            {/* Ray-traced Liquid Glass Background Layer (Stationary light refraction, no mouse tracking, no shadows) */}
+          <liquid-glass
+            renderer="css"
+            no-pointer=""
+            style={{ display: 'block', background: 'transparent', minHeight: 0 }}
+          >
             <div 
-              aria-hidden="true"
-              className={`absolute inset-0 rounded-full overflow-hidden pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                (isScrolled || mobileMenuOpen) ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
+              glass=""
+              className={`relative flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
+                (isScrolled || mobileMenuOpen)
+                  ? 'liquid-glass-pill px-6 py-2 text-white' 
+                  : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
               }`}
             >
-              {/* Frosted optical layer with color preservation */}
-              <div className="absolute inset-0 bg-[#0A1E35]/65 backdrop-blur-xl" />
-
-              {isMounted && (
-                <liquid-glass
-                  no-pointer=""
-                  colors="#0A1E35 #0c2b4d #c8a951 #071524"
-                  dim="0.1"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    minHeight: 0,
-                    display: 'block',
-                    background: 'transparent',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  <div
-                    glass=""
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: '999px',
-                      '--glass-tint': 'rgba(10, 30, 53, 0.55)',
-                      '--glass-depth': '1.15',
-                      '--glass-dome': '1.3',
-                      '--glass-chroma': '0.012',
-                      '--glass-frost': '0.32',
-                    } as React.CSSProperties}
-                  />
-                </liquid-glass>
-              )}
-            </div>
-
-            {/* Logo */}
+              {/* Logo */}
             <Link href="/" className="flex items-center group relative z-10" title="PQS - Precision Quality Services">
               <Image 
                 src="/banner_wordmark_white.png" 
@@ -276,6 +241,7 @@ export default function Header() {
             </div>
 
           </div>
+          </liquid-glass>
         </div>
 
         {/* Mobile Drawer */}

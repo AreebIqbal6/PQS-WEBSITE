@@ -532,11 +532,13 @@ function Fe(o) {
   return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(o);
 }
 const Ce = [[1, 0.35, 0.12], [1, 0.18, 0.54], [0.42, 0.23, 1], [0, 0.76, 1]], Pe = [0.04, 0.03, 0.12], ee = `
-:host { display: block; position: relative; isolation: isolate; overflow: hidden; min-height: 120px; color: #fff; background: #0a0818; }
+:host { display: block; position: relative; isolation: isolate; overflow: visible; min-height: 0; color: inherit; background: transparent; }
 :host([hidden]) { display: none; }
 canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .5s; }
 :host([data-ready]) canvas { opacity: 1; }
+:host([renderer='css']) canvas, :host([data-renderer='css']) canvas, :host(:not([backdrop])) canvas { display: none !important; }
 .fallback { position: absolute; inset: 0; z-index: 0; background: var(--image, linear-gradient(120deg, #ff5a1f, #ff2d8a 35%, #6a3bff 65%, #00c2ff)) center / cover no-repeat; }
+:host([renderer='css']) .fallback, :host([data-renderer='css']) .fallback, :host(:not([backdrop])) .fallback { display: none !important; }
 :host([data-renderer='webgl'][data-ready]) .fallback { display: none; }
 .content { position: relative; z-index: 1; height: 100%; }`, ie = document.createElement("template");
 ie.innerHTML = '<div class="fallback" part="fallback"></div><canvas part="canvas" aria-hidden="true"></canvas><div class="content" part="content"><slot></slot></div>';
@@ -544,7 +546,7 @@ const te = `
 liquid-glass [glass] { -webkit-tap-highlight-color: transparent; }
 liquid-glass [glass-drag] { touch-action: none; cursor: grab; user-select: none; }
 liquid-glass [glass-drag]:active { cursor: grabbing; }
-liquid-glass:not([data-renderer='webgl']) [glass] { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.38); box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 10px 30px rgba(0,0,0,.18); backdrop-filter: blur(14px) saturate(1.7); -webkit-backdrop-filter: blur(14px) saturate(1.7); }`;
+liquid-glass [glass], liquid-glass:not([data-renderer='webgl']) [glass] { background: var(--glass-tint, rgba(10, 30, 53, 0.42)); border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.45); backdrop-filter: blur(24px) saturate(190%) contrast(1.02); -webkit-backdrop-filter: blur(24px) saturate(190%); }`;
 function oe(o) {
   if (!("adoptedStyleSheets" in Document.prototype) || !("replaceSync" in CSSStyleSheet.prototype)) return null;
   try {
@@ -674,6 +676,12 @@ class se extends HTMLElement {
   connectedCallback() {
     this.events = new AbortController();
     const t = this.events.signal;
+    if (this.getAttribute("renderer") === "css" || !this.hasAttribute("backdrop")) {
+      this.dataset.renderer = "css";
+      if (this.canvas) this.canvas.style.display = "none";
+      if (this.fallback) this.fallback.style.display = "none";
+      return;
+    }
     try {
       this.renderer = _e(this.canvas), this.dataset.renderer = "webgl";
     } catch (n) {
@@ -758,12 +766,10 @@ class se extends HTMLElement {
   }
   // ---- pointer: light, press, drag
   movePointer(t) {
-    if (this.hasAttribute("no-pointer")) return;
     const n = this.getBoundingClientRect();
     this.pointer.x = t.clientX - n.left, this.pointer.y = t.clientY - n.top, this.pointer.inside = !0;
   }
   press(t) {
-    if (this.hasAttribute("no-pointer")) return;
     this.movePointer(t);
     const n = t.target?.closest?.("[glass]");
     if (!(!n || !this.contains(n)) && (this.pointer.down = !0, this.pointer.target = n, n.hasAttribute("glass-drag"))) {
@@ -772,7 +778,6 @@ class se extends HTMLElement {
     }
   }
   dragMove(t) {
-    if (this.hasAttribute("no-pointer")) return;
     const n = this.pointer.target, r = n ? this.states.get(n)?.drag : null;
     if (!n || !r || r.pointer !== t.pointerId) return;
     const s = this.state(n), a = Math.max(1, t.timeStamp - r.lastT) / 1e3;
@@ -813,11 +818,10 @@ class se extends HTMLElement {
     a && a.readyState >= 2 && (n.setSource(a, a.videoWidth, a.videoHeight), this.sceneDirty = !0), this.animatedScene && !s && (this.time += r, this.sceneDirty = !0);
     const y = this.sceneDirty;
     this.sceneDirty && (n.drawScene(this.time), this.sceneDirty = !1);
-        const noPtr = this.hasAttribute("no-pointer");
-    const u = this.light, x = (!noPtr && this.pointer.inside) ? this.pointer.x - 100 : this.width * 0.18, g = (!noPtr && this.pointer.inside) ? this.pointer.y - 160 : -this.height * 0.25;
+    const u = this.light, x = this.pointer.inside ? this.pointer.x - 100 : this.width * 0.18, g = this.pointer.inside ? this.pointer.y - 160 : -this.height * 0.25;
     [u.x, u.vx] = z(u.x, u.vx, x, r, 330, 24), [u.y, u.vy] = z(u.y, u.vy, g, r, 330, 24);
     const h = this.bulge;
-    (!noPtr && this.pointer.inside) && h.x < -5e3 && Object.assign(h, { x: this.pointer.x, y: this.pointer.y, vx: 0, vy: 0 }), (!noPtr && this.pointer.inside && !s) ? ([h.x, h.vx] = z(h.x, h.vx, this.pointer.x, r, 140, 9), [h.y, h.vy] = z(h.y, h.vy, this.pointer.y, r, 140, 9)) : Object.assign(h, { x: -1e4, y: -1e4, vx: 0, vy: 0 }), this.microphone && this.syncAudio();
+    this.pointer.inside && h.x < -5e3 && Object.assign(h, { x: this.pointer.x, y: this.pointer.y, vx: 0, vy: 0 }), !this.pointer.inside || s ? Object.assign(h, { x: -1e4, y: -1e4, vx: 0, vy: 0 }) : ([h.x, h.vx] = z(h.x, h.vx, this.pointer.x, r, 140, 9), [h.y, h.vy] = z(h.y, h.vy, this.pointer.y, r, 140, 9)), this.microphone && this.syncAudio();
     let p = this.silent;
     this.microphone?.getState().status === "live" ? p = this.microphone.read(r) : this.node ? p = this.node.read(r) : this.manualAudio ? p = this.manualAudio : this.hasAttribute("inner-light") && (this.demo.bands.forEach((l, f) => {
       this.demo.bands[f] = 0.26 + Math.sin(this.time * (1.4 + f * 0.28) + f) * 0.17;
