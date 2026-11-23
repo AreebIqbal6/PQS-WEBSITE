@@ -19,9 +19,6 @@ export default function Header() {
 
   useEffect(() => {
     setIsMounted(true);
-    import('@zerowing/liquid-glass').catch((err) => {
-      console.error('Failed to load liquid-glass:', err);
-    });
   }, []);
 
   const handleOurServicesClick = (e: React.MouseEvent) => {
@@ -121,19 +118,16 @@ export default function Header() {
         (isScrolled || mobileMenuOpen) ? 'py-2.5 sm:py-3' : 'py-5 sm:py-6'
       }`}>
         <div className="container mx-auto px-4 lg:px-8">
-          <liquid-glass
-            renderer="css"
-            no-pointer=""
-            style={{ display: 'block', background: 'transparent', minHeight: 0 }}
+          <div 
+            className={`relative flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
+              (isScrolled || mobileMenuOpen)
+                ? 'bg-[#0A1E35]/45 backdrop-blur-2xl saturate-190 border border-white/20 shadow-none px-6 py-2 text-white' 
+                : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
+            }`}
+            style={(isScrolled || mobileMenuOpen) ? {
+              boxShadow: 'inset 0 1px 1.5px rgba(255, 255, 255, 0.45)',
+            } : undefined}
           >
-            <div 
-              glass=""
-              className={`relative flex justify-between items-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full ${
-                (isScrolled || mobileMenuOpen)
-                  ? 'liquid-glass-pill px-6 py-2 text-white' 
-                  : 'bg-transparent border border-transparent shadow-none px-4 sm:px-6 py-3 text-white'
-              }`}
-            >
               {/* Logo */}
             <Link href="/" className="flex items-center group relative z-10" title="PQS - Precision Quality Services">
               <Image 
@@ -241,7 +235,6 @@ export default function Header() {
             </div>
 
           </div>
-          </liquid-glass>
         </div>
 
         {/* Mobile Drawer */}
